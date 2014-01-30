@@ -21,9 +21,9 @@ namespace Sandbox
 
 
 
-            //var cForm = new AsciiForm();
-            //cForm.Controle.Add(new AsciiLabel(){Text = "Helloworld"});
-            //AsciiApplication.Run(cForm);
+            var cForm = new AsciiForm();
+            cForm.Controle.Add(new AsciiChar(10,10, ));
+            AsciiApplication.Run(cForm);
 
         }
 
