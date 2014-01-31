@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ADIPlus;
+using ADIPlus.Drawing;
 
 namespace Sandbox
 {
@@ -15,32 +15,11 @@ namespace Sandbox
 
         static void Main(string[] args)
         {
-            //var form = new Form();
-            //form.Controls.Add(new MyClass(){ Location = new Point(10,10), Size = new Size(100,40)});            
-            //Application.Run(form);
-
-
-
-            var cForm = new AsciiForm();
-            cForm.Controle.Add(new AsciiChar(10,10, ));
-            AsciiApplication.Run(cForm);
-
-        }
-
-        
+            var ag = AsciiGraphics.FromConsole();
+            do{
+                ag.DrawHorizontalLine(new AsciiColor(ConsoleColor.Blue, ConsoleColor.Black, '*'), new Point(10,10), 40);
+                ag.DrawVerticalLine(new AsciiColor(ConsoleColor.Green, ConsoleColor.Yellow, '*'), new Point(10, 10), 7);
+            } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
+        }        
     }
-
-    class MyClass :Control
-    {
-        public MyClass()
-        {
-            SetStyle(ControlStyles.ResizeRedraw, true);
-        }
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            e.Graphics.DrawString("Hello", new Font("Arial",12), Brushes.Black, 0, 0);
-        }
-    }
-
-    
 }
