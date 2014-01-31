@@ -46,7 +46,7 @@
   <ItemGroup>
     <Compile Include="Drawing\AsciiColor.cs" />
     <Compile Include="Drawing\CharImage.cs" />
-    <Compile Include="Drawing\ConcreatConsole.cs" />
+    <Compile Include="Drawing\ConcreteConsole.cs" />
     <Compile Include="Drawing\ConsoleAdabter.cs" />
     <Compile Include="Drawing\Point.cs" />
     <Compile Include="Drawing\Size.cs" />

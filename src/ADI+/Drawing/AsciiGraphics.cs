@@ -72,7 +72,7 @@
 
         public static AsciiGraphics FromConsole()
         {
-            return new AsciiGraphics(new ConcreatConsole());
+            return new AsciiGraphics(new ConcreteConsole());
         }
     }
 }
