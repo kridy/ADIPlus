@@ -8,17 +8,24 @@ using System.Windows.Forms;
 using ADIPlus.Drawing;
 
 namespace Sandbox
-{
+{ 
     class Program
     {
 
 
         static void Main(string[] args)
         {
-            var ag = AsciiGraphics.FromConsole();
+
+            var backbuffer = new CharImage(80, 25);
+            var displayRender = AsciiGraphics.FromConsole();
+            var bufferRender = AsciiGraphics.FromCharImage(backbuffer);
+
             do{
-                ag.DrawHorizontalLine(new AsciiColor(ConsoleColor.Blue, ConsoleColor.Black, '*'), new Point(10,10), 40);
-                ag.DrawVerticalLine(new AsciiColor(ConsoleColor.Green, ConsoleColor.Yellow, '*'), new Point(10, 10), 7);
+                bufferRender.DrawHorizontalLine(new AsciiColor(ConsoleColor.Blue, ConsoleColor.Black, '*'), new Point(10, 10), 40);
+                bufferRender.DrawVerticalLine(new AsciiColor(ConsoleColor.Green, ConsoleColor.Yellow, '*'), new Point(10, 10), 7);
+
+                displayRender.DrawImage(backbuffer);
+
             } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
         }        
     }

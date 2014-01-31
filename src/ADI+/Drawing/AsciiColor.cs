@@ -14,5 +14,11 @@ namespace ADIPlus.Drawing
         public ConsoleColor ForgroundColor { get; set; }
         public ConsoleColor BackgroundColor { get; set; }
         public char Character { get; set; }
+
+
+        public static AsciiColor Empty()
+        {
+            return new AsciiColor(ConsoleColor.Black, ConsoleColor.Black, ' ');
+        }
     }
 }

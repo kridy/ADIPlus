@@ -31,10 +31,25 @@
                 m_console.SetChar(x, y + i, ch);
         }
 
+        public void DrawImage(CharImage image)
+        {
+            for (uint y = 0; y < image.Height; y++)
+            {
+                for (uint x = 0; x < image.Width; x++)
+                {
+                    m_console.SetChar(x, y, image[(y*image.Width) + x]);
+
+                }
+            }
+        }
+
+
         private bool IsValid(uint x, uint y)
         {
             return x <= m_console.Width && y <= m_console.Height;
         }
+
+
 
         public static AsciiGraphics FromCharImage(CharImage image)
         {
