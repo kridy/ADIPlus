@@ -31,16 +31,32 @@
                 m_console.SetChar(x, y + i, ch);
         }
 
+        public void DrawImage(uint x, uint y, CharImage image)
+        {
+            var xOffset = x;
+            var yOffset = y;
+
+            for (uint imgY = 0; imgY < image.Height; imgY++)
+            for (uint imgX = 0; imgX < image.Width; imgX++)
+            {
+                var x1 = imgX + xOffset;
+                var y1 = imgY + yOffset;
+
+                if(x1 > m_console.Width || y1 > m_console.Height) continue;
+
+                m_console.SetChar(x1, y1, image[(imgY * image.Width) + imgX]);
+            }            
+        }
+
+
+        public void DrawImage(Point location, CharImage image)
+        {
+            DrawImage(location.X, location.Y, image);
+        }
+
         public void DrawImage(CharImage image)
         {
-            for (uint y = 0; y < image.Height; y++)
-            {
-                for (uint x = 0; x < image.Width; x++)
-                {
-                    m_console.SetChar(x, y, image[(y*image.Width) + x]);
-
-                }
-            }
+            DrawImage(new Point(0, 0),image);
         }
 
 
@@ -48,8 +64,6 @@
         {
             return x <= m_console.Width && y <= m_console.Height;
         }
-
-
 
         public static AsciiGraphics FromCharImage(CharImage image)
         {

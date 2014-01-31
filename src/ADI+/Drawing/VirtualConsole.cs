@@ -22,12 +22,12 @@ namespace ADIPlus.Drawing
 
         public override uint Width
         {
-            get { return (uint)Console.WindowWidth; }
+            get { return m_image.Width; }
         }
 
         public override uint Height
         {
-            get { return (uint)Console.WindowHeight; }
+            get { return m_image.Height; }
 
         }
     }
