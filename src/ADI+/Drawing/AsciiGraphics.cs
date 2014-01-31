@@ -29,7 +29,7 @@
         {
             for (uint i = 0; i < height; i++)
                 m_console.SetChar(x, y + i, ch);
-        }
+        }       
 
         public void DrawImage(uint x, uint y, CharImage image)
         {
@@ -37,17 +37,19 @@
             var yOffset = y;
 
             for (uint imgY = 0; imgY < image.Height; imgY++)
-            for (uint imgX = 0; imgX < image.Width; imgX++)
             {
-                var x1 = imgX + xOffset;
                 var y1 = imgY + yOffset;
+                if (y1 >= m_console.Height) break; 
 
-                if(x1 > m_console.Width || y1 > m_console.Height) continue;
+                for (uint imgX = 0; imgX < image.Width; imgX++)
+                {
+                    var x1 = imgX + xOffset;                   
+                    if (x1 >= m_console.Width) break;
 
-                m_console.SetChar(x1, y1, image[(imgY * image.Width) + imgX]);
-            }            
+                    m_console.SetChar(x1, y1, image[(imgY*image.Width) + imgX]);
+                }
+            }
         }
-
 
         public void DrawImage(Point location, CharImage image)
         {
@@ -57,12 +59,6 @@
         public void DrawImage(CharImage image)
         {
             DrawImage(new Point(0, 0),image);
-        }
-
-
-        private bool IsValid(uint x, uint y)
-        {
-            return x <= m_console.Width && y <= m_console.Height;
         }
 
         public static AsciiGraphics FromCharImage(CharImage image)

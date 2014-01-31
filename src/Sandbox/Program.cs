@@ -15,16 +15,29 @@ namespace Sandbox
 
         static void Main(string[] args)
         {
+            var colors = new Dictionary<int, ConsoleColor>
+                             {
+                                 {0, ConsoleColor.Blue},
+                                 {1, ConsoleColor.Cyan},
+                                 {2, ConsoleColor.Green},
+                                 {3, ConsoleColor.Yellow},
+                                 {4, ConsoleColor.Magenta},
+                                 {5, ConsoleColor.Red}
+                             };
 
-            var backbuffer = new CharImage(10, 4);
+            var random = new Random();
+
+            var backbuffer = new CharImage(80, 24);
             var displayRender = AsciiGraphics.FromConsole();
             var bufferRender = AsciiGraphics.FromCharImage(backbuffer);
 
             do{
-                bufferRender.DrawHorizontalLine(new AsciiColor(ConsoleColor.Blue, ConsoleColor.Black, '*'), new Point(0, 0), 9);
-                bufferRender.DrawVerticalLine(new AsciiColor(ConsoleColor.Green, ConsoleColor.Yellow, '*'), new Point(0, 0), 3);
 
-                displayRender.DrawImage(10,5,backbuffer);
+                for (uint i = 0; i < 24; i++)
+                    Console.Write("********************************************************************************");
+                    //bufferRender.DrawHorizontalLine(new AsciiColor(colors[random.Next(0, 5)], colors[random.Next(0, 5)], '*'), new Point(0, i), 79);                
+
+                //displayRender.DrawImage(backbuffer);
 
             } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
         }        
