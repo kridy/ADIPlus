@@ -13,6 +13,7 @@ namespace ADIPlus.Drawing
                 throw new ArgumentNullException("image");
 				
             m_image = image;
+            DoClear(m_clearColor);
         }
 
         public override void SetChar(uint x, uint y, AsciiColor ch)
@@ -28,7 +29,11 @@ namespace ADIPlus.Drawing
         public override uint Height
         {
             get { return m_image.Height; }
+        }
 
+        protected override void DoClear(AsciiColor color)
+        {
+            m_image.Init(color);
         }
     }
 }

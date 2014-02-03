@@ -16,8 +16,13 @@
 
         public void DrawHorizontalLine(AsciiColor ch, uint x, uint y, uint width)
         {
+            m_console.DeferredRender();
+
             for (uint i = 0; i < width; i++)
                 m_console.SetChar(x + i, y, ch);
+
+            m_console.AllowRender();
+
         }
 
         public void DrawVerticalLine(AsciiColor ch, Point location, uint height)
@@ -27,8 +32,13 @@
 
         public void DrawVerticalLine(AsciiColor ch, uint x, uint y, uint height)
         {
+            m_console.DeferredRender();
+
             for (uint i = 0; i < height; i++)
                 m_console.SetChar(x, y + i, ch);
+
+            m_console.AllowRender();
+
         }       
 
         public void DrawImage(uint x, uint y, CharImage image)
@@ -36,6 +46,8 @@
             var xOffset = x;
             var yOffset = y;
 
+            m_console.DeferredRender();
+            
             for (uint imgY = 0; imgY < image.Height; imgY++)
             {
                 var y1 = imgY + yOffset;
@@ -49,6 +61,8 @@
                     m_console.SetChar(x1, y1, image[(imgY*image.Width) + imgX]);
                 }
             }
+
+              m_console.AllowRender();
         }
 
         public void DrawImage(Point location, CharImage image)

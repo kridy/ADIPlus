@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using ADIPlus.Drawing;
 
 namespace Sandbox
@@ -15,6 +10,8 @@ namespace Sandbox
 
         static void Main(string[] args)
         {
+            var color = ConsoleColor.Yellow & ConsoleColor.DarkGreen;
+
             var colors = new Dictionary<int, ConsoleColor>
                              {
                                  {0, ConsoleColor.Blue},
@@ -27,17 +24,20 @@ namespace Sandbox
 
             var random = new Random();
 
-            var backbuffer = new CharImage(80, 24);
+            var backbuffer = new CharImage(10, 10);
             var displayRender = AsciiGraphics.FromConsole();
             var bufferRender = AsciiGraphics.FromCharImage(backbuffer);
 
             do{
 
-                for (uint i = 0; i < 24; i++)
-                    Console.Write("********************************************************************************");
-                    //bufferRender.DrawHorizontalLine(new AsciiColor(colors[random.Next(0, 5)], colors[random.Next(0, 5)], '*'), new Point(0, i), 79);                
+                for (uint i = 0; i < 10; i++)
+                {
+                    //Console.Write("********************************************************************************");
+                    bufferRender.DrawHorizontalLine(
+                        new AsciiColor(colors[random.Next(0, 5)], colors[random.Next(0, 5)], '*'), new Point(0, i), 10);
+                }
 
-                //displayRender.DrawImage(backbuffer);
+                displayRender.DrawImage(backbuffer);
 
             } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
         }        
