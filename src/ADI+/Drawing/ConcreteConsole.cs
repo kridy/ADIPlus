@@ -1,9 +1,60 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ADIPlus.Drawing
 {
+    public class PixelDescriptionCollection : IEnumerable<PixelDescription>
+    {
+        private List<PixelDescription> m_pixelDescriptions;
+
+        public PixelDescriptionCollection()
+        {
+            m_pixelDescriptions = new List<PixelDescription>();
+        }
+
+        public void Add(AsciiColor color, uint x, uint y)
+        {
+            Add(color, new Point(x,y));
+        }
+
+        public void Add(AsciiColor color, Point location)
+        {
+            m_pixelDescriptions.Add(new PixelDescription(color, location));
+        }
+
+        public void AlignPixelData()
+        {
+            m_pixelDescriptions.OrderBy(pxd => pxd.Location.Y).ThenBy(pxd => pxd.Location.Y);
+        }
+
+        public IEnumerator<PixelDescription> GetEnumerator()
+        {
+            return m_pixelDescriptions.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        
+    }
+
+    public class PixelDescription
+    {
+        public PixelDescription(AsciiColor color, Point location)
+        {
+            Color = color;
+            Location = location;
+        }
+
+        public AsciiColor Color { get; private set; }
+        public Point Location { get; private set; }
+    }
+
     internal class ConcreteConsole : ConsoleAdabter
     {
         private bool m_isRenderingDeffered;
@@ -14,36 +65,11 @@ namespace ADIPlus.Drawing
             m_isRenderingDeffered = false;
         }
 
-        private ConsoleColor fc = ConsoleColor.Black; 
-        private ConsoleColor bc = ConsoleColor.Black;
-        private StringBuilder builder = new StringBuilder();
-        private int m_startX = 0;
-        private int m_prevX = 0;
-        private int m_startY = 0;
-
         public override void SetChar(uint x, uint y, AsciiColor color)
         {
             if (m_isRenderingDeffered)
             {
-                if (fc == color.ForgroundColor && 
-                    bc == color.BackgroundColor && 
-                    m_startY == y && 
-                    (m_prevX +1) == x)
-                {
-                    builder.Append(color.Character);
-                }
-                else
-                {
-                    Console.ForegroundColor =color.ForgroundColor;
-                    Console.BackgroundColor = color.BackgroundColor;
-                    Console.SetCursorPosition(m_startX,m_startY);
-                    Console.Write(builder.ToString());
-                    m_startX = (int)x;
-                    m_prevX = (int) x;
-                    m_startY = (int) y;
-                    fc = color.ForgroundColor;
-                    bc = color.BackgroundColor;
-                }
+                pxCol.Add(color, x, y);
                 return;
             }
 
@@ -53,19 +79,59 @@ namespace ADIPlus.Drawing
             Console.Write(color.Character);
         }
 
+
+        private PixelDescriptionCollection pxCol; 
+
         public override void DeferredRender()
         {
-            fc = ConsoleColor.Black;
-            bc = ConsoleColor.Black;
-            builder = new StringBuilder();
-            m_startX = 0;
-            m_prevX = 0;
-            m_startY = 0;
+            if (m_isRenderingDeffered) return;
+
+            pxCol = new PixelDescriptionCollection();
             m_isRenderingDeffered = true;
         }
 
         public override void AllowRender()
         {
+            if (!m_isRenderingDeffered) return;
+            var sb = new StringBuilder();
+
+            var prevY = -1;
+            var startLocation = new Point(0,0);
+            var foregroundColor = ConsoleColor.Black;
+            var backgroundColor = ConsoleColor.Black;
+
+            pxCol.AlignPixelData();
+
+            var value = pxCol.GroupBy(description => description.Location.Y);
+
+
+            //foreach (var pxd in pxCol)
+            //{             
+            //    if (prevY == pxd.Location.Y)
+            //    {
+            //        if (sb.Length == 0)
+            //        {
+            //            foregroundColor = pxd.Color.ForgroundColor;
+            //            backgroundColor = pxd.Color.BackgroundColor;
+
+            //            startLocation = pxd.Location;
+            //        }
+
+            //        sb.Append(pxd.Color.Character);
+            //    }
+            //    else
+            //    {
+            //        Console.ForegroundColor = foregroundColor;
+            //        Console.BackgroundColor = backgroundColor;
+            //        Console.SetCursorPosition((int)startLocation.X, (int)startLocation.Y);
+            //        Console.Write(sb.ToString());
+            //        sb.Clear();
+            //        prevY = (int)pxd.Location.Y;
+            //    }
+            //}
+
+            
+
             m_isRenderingDeffered = false;
         }
 

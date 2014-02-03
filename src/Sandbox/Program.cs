@@ -24,17 +24,17 @@ namespace Sandbox
 
             var random = new Random();
 
-            var backbuffer = new CharImage(10, 10);
+            var backbuffer = new CharImage(70, 20);
             var displayRender = AsciiGraphics.FromConsole();
             var bufferRender = AsciiGraphics.FromCharImage(backbuffer);
 
             do{
 
-                for (uint i = 0; i < 10; i++)
+                for (uint i = 0; i < 20; i++)
                 {
                     //Console.Write("********************************************************************************");
                     bufferRender.DrawHorizontalLine(
-                        new AsciiColor(colors[random.Next(0, 5)], colors[random.Next(0, 5)], '*'), new Point(0, i), 10);
+                        new AsciiColor(colors[random.Next(0, 5)], colors[random.Next(0, 5)], '*'), new Point(0, i), 70);
                 }
 
                 displayRender.DrawImage(backbuffer);
