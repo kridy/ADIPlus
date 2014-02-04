@@ -30,16 +30,18 @@ namespace Sandbox
 
             do{
 
-                for (uint i = 0; i < 20; i++)
-                {
-                    //Console.Write("********************************************************************************");
-                    bufferRender.DrawHorizontalLine(
-                        new AsciiColor(colors[random.Next(0, 5)], colors[random.Next(0, 5)], '*'), new Point(0, i), 70);
-                }
+            //    for (uint i = 0; i < 20; i++)
+            //    {
+            //        //Console.Write("********************************************************************************");
+            //        bufferRender.DrawHorizontalLine(
+            //            new AsciiColor(colors[random.Next(0, 5)], colors[random.Next(0, 5)], '*'), new Point(0, i), 70);
+            //    }
 
-                displayRender.DrawImage(backbuffer);
-
+            //    displayRender.DrawImage(backbuffer);
+                displayRender.DrawHorizontalLine(new AsciiColor(colors[random.Next(0, 5)], colors[random.Next(0, 5)], '*'), new Point(10, 10), 60);
+                displayRender.DrawVerticalLine(new AsciiColor(colors[random.Next(0, 5)], colors[random.Next(0, 5)], '*'), new Point(10, 10), 14);
             } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
+            
         }        
     }
 }

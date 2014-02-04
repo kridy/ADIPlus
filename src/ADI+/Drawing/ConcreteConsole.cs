@@ -53,6 +53,15 @@ namespace ADIPlus.Drawing
 
         public AsciiColor Color { get; private set; }
         public Point Location { get; private set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0},{1} : {2} {3}",
+                                 Location.X,
+                                 Location.Y,
+                                 Color.ForgroundColor,
+                                 Color.BackgroundColor);
+        }
     }
 
     internal class ConcreteConsole : ConsoleAdabter
@@ -93,44 +102,26 @@ namespace ADIPlus.Drawing
 
         public override void AllowRender()
         {
-            if (!m_isRenderingDeffered) return;
-            
-            var sb = new StringBuilder();
-            var startLocation = new Point(0,0);
-            var foregroundColor = ConsoleColor.Black;
-            var backgroundColor = ConsoleColor.Black;
-
-            pxCol.AlignPixelData();
-
-            var value = pxCol.GroupBy(description => description.Location.Y);
-
-
-            //foreach (var pxd in pxCol)
-            //{             
-            //    if (prevY == pxd.Location.Y)
-            //    {
-            //        if (sb.Length == 0)
-            //        {
-            //            foregroundColor = pxd.Color.ForgroundColor;
-            //            backgroundColor = pxd.Color.BackgroundColor;
-
-            //            startLocation = pxd.Location;
-            //        }
-
-            //        sb.Append(pxd.Color.Character);
-            //    }
-            //    else
-            //    {
-            //        Console.ForegroundColor = foregroundColor;
-            //        Console.BackgroundColor = backgroundColor;
-            //        Console.SetCursorPosition((int)startLocation.X, (int)startLocation.Y);
-            //        Console.Write(sb.ToString());
-            //        sb.Clear();
-            //        prevY = (int)pxd.Location.Y;
-            //    }
-            //}
+            if (!m_isRenderingDeffered) return;           
 
             
+            //group all pixels line by line
+            var lines = pxCol
+                .GroupBy(description => description.Location.Y)
+                .Select(grouping => new List<PixelDescription>(grouping
+                    .Select(description => description)));
+
+            foreach (var line in lines)
+            {
+                var firstPx = line.First();
+
+                var sb = line.Aggregate(new StringBuilder(),(builder, description) => builder.Append(description.Color.Character));
+                Console.SetCursorPosition((int)firstPx.Location.X, (int)firstPx.Location.Y);
+                Console.ForegroundColor = firstPx.Color.ForgroundColor;
+                Console.BackgroundColor = firstPx.Color.BackgroundColor;
+                Console.Write(sb.ToString());
+            }
+
 
             m_isRenderingDeffered = false;
         }
