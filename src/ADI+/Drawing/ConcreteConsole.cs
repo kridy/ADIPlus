@@ -8,7 +8,7 @@ namespace ADIPlus.Drawing
 {
     public class PixelDescriptionCollection : IEnumerable<PixelDescription>
     {
-        private List<PixelDescription> m_pixelDescriptions;
+        private readonly List<PixelDescription> m_pixelDescriptions;
 
         public PixelDescriptionCollection()
         {
@@ -87,15 +87,15 @@ namespace ADIPlus.Drawing
             if (m_isRenderingDeffered) return;
 
             pxCol = new PixelDescriptionCollection();
+            
             m_isRenderingDeffered = true;
         }
 
         public override void AllowRender()
         {
             if (!m_isRenderingDeffered) return;
+            
             var sb = new StringBuilder();
-
-            var prevY = -1;
             var startLocation = new Point(0,0);
             var foregroundColor = ConsoleColor.Black;
             var backgroundColor = ConsoleColor.Black;
