@@ -1,4 +1,4 @@
-ADIPlus
+ADI+
 =======
 
 A small framework for creating ascii graphics in a GDI+ like way.
