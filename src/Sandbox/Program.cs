@@ -25,7 +25,7 @@ namespace Sandbox
             var random = new Random();
 
             var backbuffer = new CharImage(80, 25);
-            var displayRender = AsciiGraphics.FromConsole();
+            var displayRender = AsciiGraphics.FromManagedConsole();
             var bufferRender = AsciiGraphics.FromCharImage(backbuffer);
 
             do
@@ -43,6 +43,8 @@ namespace Sandbox
                 //displayRender.DrawVerticalLine(new AsciiColor(colors[random.Next(0, 5)], colors[random.Next(0, 5)], '*'), new Point(10, 10), 14);
             } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
 
+            displayRender.Clear(new AsciiColor(ConsoleColor.White,ConsoleColor.DarkBlue,'*'));
+            Console.ReadKey(true);
         }
     }
 }

@@ -75,14 +75,29 @@
             DrawImage(new Point(0, 0),image);
         }
 
+        public void Clear()
+        {
+            m_console.Clear();
+        }
+
+        public void Clear(AsciiColor color)
+        {
+            m_console.Clear(color);
+        }
+
         public static AsciiGraphics FromCharImage(CharImage image)
         {
             return new AsciiGraphics(new VirtualConsole(image));
         }
 
-        public static AsciiGraphics FromConsole()
+        public static AsciiGraphics FromManagedConsole()
         {
-            return new AsciiGraphics(new ConcreteConsole());
+            return new AsciiGraphics(new ManagedConsole());
+        }
+
+        public static AsciiGraphics FromUnManagedConsole()
+        {
+            return new AsciiGraphics(new UnManagedConsole());
         }
     }
 }

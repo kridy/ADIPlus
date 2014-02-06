@@ -9,7 +9,7 @@ namespace ADIPlus.Forms
 
         public void Invalidate()
         {           
-            var g = AsciiGraphics.FromConsole();
+            var g = AsciiGraphics.FromManagedConsole();
             var cRect = new Rectangle(0, 0, Size.Width, Size.Height);
 
             InvokePaint(this, new AsciiPaintEventArgs(g, cRect));

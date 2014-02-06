@@ -46,10 +46,11 @@
   <ItemGroup>
     <Compile Include="Drawing\AsciiColor.cs" />
     <Compile Include="Drawing\CharImage.cs" />
-    <Compile Include="Drawing\ConcreteConsole.cs" />
+    <Compile Include="Drawing\ManagedConsole.cs" />
     <Compile Include="Drawing\ConsoleAdabter.cs" />
     <Compile Include="Drawing\Point.cs" />
     <Compile Include="Drawing\Size.cs" />
+    <Compile Include="Drawing\UnManagedConsole.cs" />
     <Compile Include="Drawing\VirtualConsole.cs" />
     <Compile Include="Forms\AsciiApplication.cs">
       <SubType>Code</SubType>
