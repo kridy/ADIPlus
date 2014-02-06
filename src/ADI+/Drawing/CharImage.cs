@@ -7,6 +7,12 @@ namespace ADIPlus.Drawing
             for (uint i = 0; i < image.Size; i++)
                 image[i] = initColor;
         }
+
+        internal static void Init(this AsciiColor[] image, AsciiColor initColor)
+        {
+            for (uint i = 0; i < image.Length; i++)
+                image[i] = initColor;
+        }
     }
 
     public class CharImage

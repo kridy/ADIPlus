@@ -14,6 +14,17 @@ namespace ADIPlus.Drawing
             Console.CursorVisible = false;
         }
 
+        public override void RenderBuffer(AsciiColor[] color)
+        {
+            for (int i = 0; i < color.Length; i++)
+            {
+                Console.BackgroundColor = color[i].BackgroundColor;
+                Console.ForegroundColor = color[i].ForgroundColor;
+                Console.SetCursorPosition(0,0);
+                Console.Write(color[i].Character);
+            }
+        }
+
         public override void SetChar(uint x, uint y, AsciiColor color)
         {
             Console.BackgroundColor = color.BackgroundColor;

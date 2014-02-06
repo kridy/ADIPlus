@@ -4,6 +4,12 @@ namespace ADIPlus.Drawing
 {
     public class AsciiColor
     {
+        public static readonly AsciiColor empty = new AsciiColor(ConsoleColor.Black, ConsoleColor.Black, ' ');
+
+        private AsciiColor()
+            : this(ConsoleColor.Black, ConsoleColor.Black, ' ')
+        {}
+
         public AsciiColor(ConsoleColor forgroundColor, ConsoleColor backgroundColor, char character)
         {             
             ForgroundColor = forgroundColor;
@@ -14,11 +20,5 @@ namespace ADIPlus.Drawing
         public ConsoleColor ForgroundColor { get; set; }
         public ConsoleColor BackgroundColor { get; set; }
         public char Character { get; set; }
-
-
-        public static AsciiColor Empty()
-        {
-            return new AsciiColor(ConsoleColor.Black, ConsoleColor.Black, ' ');
-        }
     }
 }

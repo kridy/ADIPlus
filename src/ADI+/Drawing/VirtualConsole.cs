@@ -16,6 +16,11 @@ namespace ADIPlus.Drawing
             DoClear(m_clearColor);
         }
 
+        public override void RenderBuffer(AsciiColor[] color)
+        {
+            throw new NotImplementedException();
+        }
+
         public override void SetChar(uint x, uint y, AsciiColor ch)
         {
             m_image[(Width*y) + x] = ch;
