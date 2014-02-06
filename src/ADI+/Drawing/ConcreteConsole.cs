@@ -76,11 +76,11 @@ namespace ADIPlus.Drawing
 
         public override void SetChar(uint x, uint y, AsciiColor color)
         {
-            if (m_isRenderingDeffered)
-            {
-                pxCol.Add(color, x, y);
-                return;
-            }
+            //if (m_isRenderingDeffered)
+            //{
+            //    pxCol.Add(color, x, y);
+            //    return;
+            //}
 
             Console.BackgroundColor = color.BackgroundColor;
             Console.ForegroundColor = color.ForgroundColor;
@@ -93,37 +93,37 @@ namespace ADIPlus.Drawing
 
         public override void DeferredRender()
         {
-            if (m_isRenderingDeffered) return;
+            //if (m_isRenderingDeffered) return;
 
-            pxCol = new PixelDescriptionCollection();
+            //pxCol = new PixelDescriptionCollection();
             
-            m_isRenderingDeffered = true;
+            //m_isRenderingDeffered = true;
         }
 
         public override void AllowRender()
         {
-            if (!m_isRenderingDeffered) return;           
+            //if (!m_isRenderingDeffered) return;           
 
             
-            //group all pixels line by line
-            var lines = pxCol
-                .GroupBy(description => description.Location.Y)
-                .Select(grouping => new List<PixelDescription>(grouping
-                    .Select(description => description)));
+            ////group all pixels line by line
+            //var lines = pxCol
+            //    .GroupBy(description => description.Location.Y)
+            //    .Select(grouping => new List<PixelDescription>(grouping
+            //        .Select(description => description)));
 
-            foreach (var line in lines)
-            {
-                var firstPx = line.First();
+            //foreach (var line in lines)
+            //{
+            //    var firstPx = line.First();
 
-                var sb = line.Aggregate(new StringBuilder(),(builder, description) => builder.Append(description.Color.Character));
-                Console.SetCursorPosition((int)firstPx.Location.X, (int)firstPx.Location.Y);
-                Console.ForegroundColor = firstPx.Color.ForgroundColor;
-                Console.BackgroundColor = firstPx.Color.BackgroundColor;
-                Console.Write(sb.ToString());
-            }
+            //    var sb = line.Aggregate(new StringBuilder(),(builder, description) => builder.Append(description.Color.Character));
+            //    Console.SetCursorPosition((int)firstPx.Location.X, (int)firstPx.Location.Y);
+            //    Console.ForegroundColor = firstPx.Color.ForgroundColor;
+            //    Console.BackgroundColor = firstPx.Color.BackgroundColor;
+            //    Console.Write(sb.ToString());
+            //}
 
 
-            m_isRenderingDeffered = false;
+            //m_isRenderingDeffered = false;
         }
 
         public override uint Width
