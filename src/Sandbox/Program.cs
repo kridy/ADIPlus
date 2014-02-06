@@ -24,30 +24,34 @@ namespace Sandbox
 
             var random = new Random();
 
-            var backbuffer = new CharImage(20, 10);
-            var displayRender = AsciiGraphics.FromManagedConsole();
+            var backbuffer = new Image(80,25);   
             var bufferRender = AsciiGraphics.FromCharImage(backbuffer);
-            var fastDispRender = AsciiGraphics.FromUnManagedConsole();
+            var displayRender = AsciiGraphics.FromUnManagedConsole();
 
             do
             {
-
-                    for (uint i = 0; i < 10; i++)
+                for (int t = 0; t < 100; t++)
+                {
+                    for (uint i = 0; i < 25; i++)
                     {
-                        //Console.Write("********************************************************************************");
-                        bufferRender.DrawHorizontalLine(
-                            new AsciiColor(colors[random.Next(0, 5)], colors[random.Next(0, 5)], '*'), new Point(0, i), 20);
+                        bufferRender.DrawHorizontalLine(GetRandomColorAscii(colors, random), new Point(0, i), 80);
                     }
+                    displayRender.DrawImage(0, 0, backbuffer);
+                }
 
-                    fastDispRender.DrawImage(10,10,backbuffer);
-                //displayRender.DrawHorizontalLine(new AsciiColor(colors[random.Next(0, 5)], colors[random.Next(0, 5)], '*'), new Point(10, 10), 60);
-                //displayRender.DrawVerticalLine(new AsciiColor(colors[random.Next(0, 5)], colors[random.Next(0, 5)], '*'), new Point(10, 10), 14);
             } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
 
-            fastDispRender.Clear();
+            displayRender.Clear();
+        }
 
-            //displayRender.Clear(new AsciiColor(ConsoleColor.White,ConsoleColor.DarkBlue,'*'));
-            Console.ReadKey(true);
+        private static AsciiColor GetRandomColorAscii(Dictionary<int, ConsoleColor> colors, Random random)
+        {
+            return new AsciiColor(GetRandomColor(colors, random), GetRandomColor(colors, random), '*');
+        }
+
+        private static ConsoleColor GetRandomColor(Dictionary<int, ConsoleColor> colors, Random random)
+        {
+            return colors[random.Next(0, 5)];
         }
     }
 }

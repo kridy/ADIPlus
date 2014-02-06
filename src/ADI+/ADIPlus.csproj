@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Drawing\AsciiColor.cs" />
-    <Compile Include="Drawing\CharImage.cs" />
+    <Compile Include="Drawing\Image.cs" />
     <Compile Include="Drawing\ManagedConsole.cs" />
     <Compile Include="Drawing\ConsoleAdabter.cs" />
     <Compile Include="Drawing\Point.cs" />

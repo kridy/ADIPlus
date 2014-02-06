@@ -8,63 +8,29 @@ namespace ADIPlus.Drawing
 {
     public class UnManagedConsole : ConsoleAdabter {        
 
-        private SafeFileHandle m_consoleBufferWriteHandle;
-        private Kernel32.CharInfo[] m_buffer;
+        private readonly SafeFileHandle m_consoleBufferWriteHandle;
+        private readonly Kernel32.CharInfo[] m_CharBuffer;
         private Kernel32.SmallRect m_rect;
         private bool m_renderIsDeferred;
 
         public UnManagedConsole()
+            :base((uint)Console.WindowWidth, (uint)Console.WindowHeight)
         {            
             m_consoleBufferWriteHandle = Kernel32.CreateFile("CONOUT$", 0x40000000, 2, IntPtr.Zero, FileMode.Open, 0, IntPtr.Zero);
-                           
-            m_buffer = new Kernel32.CharInfo[Width * Height];
+
+            m_CharBuffer = new Kernel32.CharInfo[Width * Height];
             m_rect = new Kernel32.SmallRect() { Left = 0, Top = 0, Right = (short)Width, Bottom = (short)Height };
         }
 
-        public override void RenderBuffer(AsciiColor[] color)
+        public override void Invalidate()
         {
-            for (int i = 0; i < color.Length; i++)
+            for (int i = 0; i < m_buffer.Length; i++)
             {
-                m_buffer[i].Attributes = (short)color[i].ForgroundColor;
-                m_buffer[i].Char.AsciiChar = (byte)color[i].Character;
+                m_CharBuffer[i].Attributes = (short)m_buffer[i].ForgroundColor;
+                m_CharBuffer[i].Char.AsciiChar = (byte)m_buffer[i].Character;
             }
 
-            bool b = Kernel32.WriteConsoleOutput(m_consoleBufferWriteHandle, m_buffer,
-                          new Kernel32.Coord() { X = 80, Y = 25 },
-                          new Kernel32.Coord() { X = 0, Y = 0 },
-                          ref m_rect);
-        }
-
-        public override void SetChar(uint x, uint y, AsciiColor color)
-        {
-            m_buffer[(Width * y) + x].Attributes = (short)color.ForgroundColor;
-            m_buffer[(Width * y) + x].Char.AsciiChar = (byte)color.Character;
-
-            bool b = Kernel32.WriteConsoleOutput(m_consoleBufferWriteHandle, m_buffer,
-                          new Kernel32.Coord() { X = 80, Y = 25 },
-                          new Kernel32.Coord() { X = 0, Y = 0 },
-                          ref m_rect);
-        }
-
-        public override uint Width
-        {
-            get { return (uint)Console.WindowWidth; }
-        }
-
-        public override uint Height
-        {
-            get { return (uint)Console.WindowHeight; }
-        }
-
-        protected override void DoClear(AsciiColor color)
-        {
-            for (int i = 0; i < Width * Height; i++)
-            {
-                m_buffer[i].Attributes = 0;
-                m_buffer[i].Char.AsciiChar = (byte)' ';
-            }
-
-            bool b = Kernel32.WriteConsoleOutput(m_consoleBufferWriteHandle, m_buffer,
+            bool b = Kernel32.WriteConsoleOutput(m_consoleBufferWriteHandle, m_CharBuffer,
                           new Kernel32.Coord() { X = 80, Y = 25 },
                           new Kernel32.Coord() { X = 0, Y = 0 },
                           ref m_rect);

@@ -20,5 +20,10 @@ namespace ADIPlus.Drawing
         public ConsoleColor ForgroundColor { get; set; }
         public ConsoleColor BackgroundColor { get; set; }
         public char Character { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0}:{1}-{2}", ForgroundColor, BackgroundColor, Character);
+        }
     }
 }

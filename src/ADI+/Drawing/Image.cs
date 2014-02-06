@@ -2,7 +2,7 @@ namespace ADIPlus.Drawing
 {
     internal static class AsciiUtil
     {
-        public static void Init(this CharImage image, AsciiColor initColor)
+        public static void Init(this Image image, AsciiColor initColor)
         {
             for (uint i = 0; i < image.Size; i++)
                 image[i] = initColor;
@@ -15,13 +15,13 @@ namespace ADIPlus.Drawing
         }
     }
 
-    public class CharImage
+    public class Image
     {
         private readonly uint m_width;
         private readonly uint m_height;
         private readonly AsciiColor[] m_buffer;
 
-        public CharImage(uint width, uint height)
+        public Image(uint width, uint height)
         {
             m_width = width;
             m_height = height;

@@ -10,51 +10,19 @@ namespace ADIPlus.Drawing
     internal class ManagedConsole : ConsoleAdabter
     {
         public ManagedConsole()
-        {
-            Console.CursorVisible = false;
+            : base((uint)Console.WindowWidth, (uint)Console.WindowHeight)
+        {            
         }
 
-        public override void RenderBuffer(AsciiColor[] color)
+        public override void Invalidate()
         {
-            for (int i = 0; i < color.Length; i++)
+            for (int i = 0; i < m_buffer.Length; i++)
             {
-                Console.BackgroundColor = color[i].BackgroundColor;
-                Console.ForegroundColor = color[i].ForgroundColor;
+                Console.BackgroundColor = m_buffer[i].BackgroundColor;
+                Console.ForegroundColor = m_buffer[i].ForgroundColor;
                 Console.SetCursorPosition(0,0);
-                Console.Write(color[i].Character);
+                Console.Write(m_buffer[i].Character);
             }
-        }
-
-        public override void SetChar(uint x, uint y, AsciiColor color)
-        {
-            Console.BackgroundColor = color.BackgroundColor;
-            Console.ForegroundColor = color.ForgroundColor;
-            Console.SetCursorPosition((int)x, (int)y);
-            Console.Write(color.Character);
-        }
-
-        public override uint Width
-        {
-            get { return (uint)Console.WindowWidth; }
-        }
-
-        public override uint Height
-        {
-            get { return (uint)Console.WindowHeight; }
-        }
-
-        protected override void DoClear(AsciiColor color)
-        {
-            Console.BackgroundColor = color.BackgroundColor;
-            Console.ForegroundColor = color.ForgroundColor;
-            Console.SetCursorPosition(0, 0);
-            
-            var builder = new StringBuilder();
-            for (var i = 0; i < Width * Height; i++)
-            {
-                builder.Append(color.Character);
-            }
-            Console.Write(builder.ToString());
         }
     }
 }

@@ -1,25 +1,26 @@
-using System;
-using System.IO;
-using System.Runtime.InteropServices;
-using Microsoft.Win32.SafeHandles;
-
 namespace ADIPlus.Drawing
 {
     public abstract class ConsoleAdabter
     {
-        protected AsciiColor m_clearColor;
-        public abstract void RenderBuffer(AsciiColor[] color);
-        public abstract void SetChar(uint x, uint y, AsciiColor color);
-        public abstract uint Width { get; }
-        public abstract uint Height { get; }
+        protected AsciiColor[] m_buffer;
 
-        protected ConsoleAdabter()
+        public AsciiColor[] GetBuffer()
         {
-            m_clearColor = AsciiColor.empty;
+            return m_buffer;
         }
 
-        public virtual void DeferredRender() {}
-        public virtual void AllowRender() {}        
+        public abstract void Invalidate();
+        
+        public uint Width { get; private set; }
+        public uint Height { get; private set; }
+
+        protected ConsoleAdabter(uint width, uint height)
+        {
+            Width = width;
+            Height = height;
+
+            m_buffer =new AsciiColor[width * height]; 
+        }       
 
         public void Clear()
         {
@@ -28,12 +29,8 @@ namespace ADIPlus.Drawing
 
         public void Clear(AsciiColor color)
         {
-            m_clearColor = color;
-            DoClear(m_clearColor);
+            m_buffer.Init(color);
+            Invalidate();
         }
-
-        protected abstract void DoClear(AsciiColor color);
     }
-
-    
 }
