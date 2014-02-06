@@ -122,12 +122,12 @@ namespace ConsoleApplication1
 
             if (!h.IsInvalid)
             {
-                CharInfo[] buf = new CharInfo[80 * 25];
-                SmallRect rect = new SmallRect() { Left = 0, Top = 0, Right = 80, Bottom = 25 };
+                CharInfo[] buf = new CharInfo[20 * 10];
+                SmallRect rect = new SmallRect() { Left = 10, Top = 10, Right = 20, Bottom = 10 };
 
                 for (byte character = 65; character < 65 + 26; ++character)
                 {
-                    for (short attribute = 0; attribute < 15; ++attribute)
+                    for (short attribute = 17; attribute < 32; ++attribute)
                     {
                         for (int i = 0; i < buf.Length; ++i)
                         {
@@ -136,9 +136,11 @@ namespace ConsoleApplication1
                         }
 
                         bool b = WriteConsoleOutput(h, buf,
-                          new Coord() { X = 80, Y = 25 },
-                          new Coord() { X = 0, Y = 0 },
+                          new Coord() { X = 20, Y = 10 },
+                          new Coord() { X = 10, Y = 10 },
                           ref rect);
+
+                        //Console.ReadKey(true);
                     }
                 }
             }
