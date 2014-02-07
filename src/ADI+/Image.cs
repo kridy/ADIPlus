@@ -17,15 +17,13 @@ namespace ADIPlus.Drawing
 
     public class Image
     {
-        private readonly uint m_width;
-        private readonly uint m_height;
+        private readonly Rectangle m_rect;
         private readonly AsciiColor[] m_buffer;
 
         public Image(uint width, uint height)
         {
-            m_width = width;
-            m_height = height;
-            m_buffer = new AsciiColor[width * height];
+            m_rect = new Rectangle(new Point(0,0), new Size(width,height));
+            m_buffer = new AsciiColor[m_rect.Width * m_rect.Height];
         }
 
         public int Size 
@@ -35,12 +33,16 @@ namespace ADIPlus.Drawing
 
         public uint Width
         {
-            get { return m_width; }
+            get { return m_rect.Width; }
         }
 
         public uint Height
         {
-            get { return m_height; }
+            get { return m_rect.Height; }
+        }
+
+        public Rectangle Rectangle {
+            get { return m_rect; }
         }
 
         public AsciiColor this[uint index]
@@ -48,5 +50,7 @@ namespace ADIPlus.Drawing
             get { return m_buffer[index]; }
             set { m_buffer[index] = value; }
         }
+
+
     }
 }

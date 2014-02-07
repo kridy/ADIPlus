@@ -14,7 +14,7 @@ namespace ADIPlus.Drawing
         {            
         }
 
-        public override void Invalidate()
+        public override void Invalidate(Rectangle rectangle)
         {
             for (int i = 0; i < m_buffer.Length; i++)
             {

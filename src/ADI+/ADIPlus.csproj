@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,14 +45,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Kernel32.cs" />
     <Compile Include="Drawing\AsciiColor.cs" />
-    <Compile Include="Drawing\Image.cs" />
-    <Compile Include="Drawing\ManagedConsole.cs" />
-    <Compile Include="Drawing\ConsoleAdabter.cs" />
-    <Compile Include="Drawing\Point.cs" />
-    <Compile Include="Drawing\Size.cs" />
-    <Compile Include="Drawing\UnManagedConsole.cs" />
-    <Compile Include="Drawing\VirtualConsole.cs" />
+    <Compile Include="Image.cs" />
+    <Compile Include="Drawing\Adapters\ManagedConsole.cs" />
+    <Compile Include="Drawing\Adapters\ConsoleAdabter.cs" />
+    <Compile Include="Point.cs" />
+    <Compile Include="Size.cs" />
+    <Compile Include="Drawing\Adapters\UnManagedConsole.cs" />
+    <Compile Include="Drawing\Adapters\VirtualConsole.cs" />
     <Compile Include="Forms\AsciiApplication.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -72,7 +74,7 @@
     </Compile>
     <Compile Include="Drawing\AsciiGraphics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Drawing\Rectangle.cs" />
+    <Compile Include="Rectangle.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

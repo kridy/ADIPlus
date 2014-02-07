@@ -3,40 +3,40 @@
     public class AsciiGraphics
     {
         private readonly ConsoleAdabter m_console;
-        //private readonly AsciiColor[] m_buffer;
 
         private AsciiGraphics(ConsoleAdabter console)
         {
             m_console = console;
         }
 
-        public void DrawHorizontalLine(AsciiColor ch, Point location, uint width)
+        public void DrawHorizontalLine(AsciiColor color, Point location, uint width)
         {
-            DrawHorizontalLine(ch, location.X, location.Y, width);
+            DrawHorizontalLine(color, location.X, location.Y, width);
         }
 
-        public void DrawHorizontalLine(AsciiColor ch, uint x, uint y, uint width)
+        public void DrawHorizontalLine(AsciiColor color, uint x, uint y, uint width)
         {
             var buffer = m_console.GetBuffer();
 
             for (uint i = 0; i < width; i++)
-                buffer[(y*width) + (x+i)] = ch;
+                buffer[(y * width) + (x + i)] = color;
 
-            m_console.Invalidate();
-
-            var temp = m_console.GetBuffer();
-
+            m_console.Invalidate(new Rectangle(new Point(x,y),new Size(width,1)));
         }
 
-        public void DrawVerticalLine(AsciiColor ch, Point location, uint height)
+        public void DrawVerticalLine(AsciiColor color, Point location, uint height)
         {
-            DrawVerticalLine(ch, location.X, location.Y, height);
+            DrawVerticalLine(color, location.X, location.Y, height);
         }
 
-        public void DrawVerticalLine(AsciiColor ch, uint fx, uint fy, uint height)
+        public void DrawVerticalLine(AsciiColor color, uint x, uint y, uint height)
         {
-            //for (uint i = 0; i < height; i++)
-            //    m_console.SetChar(x, y + i, ch);
+            var buffer = m_console.GetBuffer();
+
+            for (uint i = 0; i < height; i++)
+                buffer[(i * m_console.Width) + x] = color;
+
+            m_console.Invalidate(new Rectangle(new Point(x, y), new Size(1, height)));
         }       
 
         public void DrawImage(uint x, uint y, Image image)
@@ -45,34 +45,23 @@
             uint counter = 0;
             for (uint imgY = 0; imgY < image.Height; imgY++)
             {
-                if (m_console.Height <= imgY + y) break;
+                var offsetY = imgY + y;
+                if (m_console.Height <= offsetY) break;
 
                 for (uint imgX = 0; imgX < image.Width; imgX++)
-                {
-                    if (m_console.Width <= imgX + x) break;
+                {                   
+                    var offsetX = imgX + x;
+                    if (m_console.Width <= offsetX)
+                    {
+                        break;
+                    }
 
-                    buffer[((imgY + y) * m_console.Width) + (imgX + x)]  = image[counter++];
+
+                    buffer[(offsetY * m_console.Width) + offsetX] = image[(imgY * image.Width) + imgX];
                 }
             }
 
-            //var xOffset = x;
-            //var yOffset = y;
-            
-            //for (uint imgY = 0; imgY < image.Height; imgY++)
-            //{
-            //    var y1 = imgY + yOffset;
-            //    if (y1 >= m_console.Height) break; 
-
-            //    for (uint imgX = 0; imgX < image.Width; imgX++)
-            //    {
-            //        var x1 = imgX + xOffset;                   
-            //        if (x1 >= m_console.Width) break;
-
-            //        buffer[(y1*image.Width) + x1] = image[(imgY*image.Width) + imgX];
-            //    }
-            //}
-
-            m_console.Invalidate();
+            m_console.Invalidate(m_console.ClientRect.Intersect(image.Rectangle));
         }
 
         public void DrawImage(Point location, Image image)
@@ -94,10 +83,7 @@
         {
             m_console.Clear(color);
         }
-
-        
-        
-        
+                   
         public static AsciiGraphics FromCharImage(Image image)
         {
             var fromCharImage = new AsciiGraphics(new VirtualConsole(image));
