@@ -9,7 +9,7 @@ namespace ADIPlus.Drawing
             return m_buffer;
         }
 
-        public abstract void Invalidate(Rectangle rectangle);
+        public abstract void Invalidate();
 
         public uint X { get; private set; }
         public uint Y { get; private set; }
@@ -22,12 +22,14 @@ namespace ADIPlus.Drawing
         {
             X = 0;
             Y = 0;
+            
             Width = width;
             Height = height;
+            
             ClientRect = new Rectangle(X, Y, Width, Height);
-
-            m_buffer =new AsciiColor[width * height]; 
         }
+
+        internal abstract void InitializeBuffer();
 
         public void Clear()
         {
@@ -37,7 +39,8 @@ namespace ADIPlus.Drawing
         public void Clear(AsciiColor color)
         {
             m_buffer.Init(color);
-            Invalidate(new Rectangle(new Point(0,0), new Size(Width,Height)));
+            //TODO init buffer with content from the console.
+            Invalidate();
         }
     }
 }

@@ -16,13 +16,26 @@ namespace ADIPlus.Drawing
         public UnManagedConsole()
             :base((uint)Console.WindowWidth, (uint)Console.WindowHeight)
         {            
-            m_consoleBufferWriteHandle = Kernel32.CreateFile("CONOUT$", 0x40000000, 2, IntPtr.Zero, FileMode.Open, 0, IntPtr.Zero);
+            m_consoleBufferWriteHandle = Kernel32.CreateFile(
+                "CONOUT$", 
+                0x40000000, 
+                2, 
+                IntPtr.Zero, 
+                FileMode.Open, 
+                0, 
+                IntPtr.Zero);
 
             m_CharBuffer = new Kernel32.CharInfo[Width * Height];
-            m_rect = new Kernel32.SmallRect() { Left = 0, Top = 0, Right = (short)Width, Bottom = (short)Height };
+            m_rect = new Kernel32.SmallRect()
+                {
+                    Left = 0, 
+                    Top = 0, 
+                    Right = (short)Width, 
+                    Bottom = (short)Height
+                };
         }
 
-        public override void Invalidate(Rectangle rectangle)
+        public override void Invalidate()
         {
             for (int i = 0; i < m_buffer.Length; i++)
             {
@@ -31,9 +44,17 @@ namespace ADIPlus.Drawing
             }
 
             bool b = Kernel32.WriteConsoleOutput(m_consoleBufferWriteHandle, m_CharBuffer,
-                          new Kernel32.Coord() { X = 80, Y = 25 },
+                          new Kernel32.Coord() { X = (short)Width, Y = (short)Height },
                           new Kernel32.Coord() { X = 0, Y = 0 },
                           ref m_rect);
         }
+
+        internal override void InitializeBuffer()
+        {
+            //TODO init buffer with content from the console
+            m_buffer = new AsciiColor[Width * Height];
+            m_buffer.Init(AsciiColor.empty);
+        }
+        
     }
 }

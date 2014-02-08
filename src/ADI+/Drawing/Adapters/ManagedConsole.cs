@@ -14,7 +14,7 @@ namespace ADIPlus.Drawing
         {            
         }
 
-        public override void Invalidate(Rectangle rectangle)
+        public override void Invalidate()
         {
             for (int i = 0; i < m_buffer.Length; i++)
             {
@@ -23,6 +23,12 @@ namespace ADIPlus.Drawing
                 Console.SetCursorPosition(0,0);
                 Console.Write(m_buffer[i].Character);
             }
+        }
+
+        internal override void InitializeBuffer()
+        {
+            m_buffer =new AsciiColor[Width * Height];
+            m_buffer.Init(AsciiColor.empty);
         }
     }
 }

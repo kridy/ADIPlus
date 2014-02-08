@@ -7,6 +7,7 @@
         private AsciiGraphics(ConsoleAdabter console)
         {
             m_console = console;
+            m_console.InitializeBuffer();
         }
 
         public void DrawHorizontalLine(AsciiColor color, Point location, uint width)
@@ -21,7 +22,7 @@
             for (uint i = 0; i < width; i++)
                 buffer[(y * width) + (x + i)] = color;
 
-            m_console.Invalidate(new Rectangle(new Point(x,y),new Size(width,1)));
+            m_console.Invalidate();
         }
 
         public void DrawVerticalLine(AsciiColor color, Point location, uint height)
@@ -36,7 +37,7 @@
             for (uint i = 0; i < height; i++)
                 buffer[(i * m_console.Width) + x] = color;
 
-            m_console.Invalidate(new Rectangle(new Point(x, y), new Size(1, height)));
+            m_console.Invalidate();
         }       
 
         public void DrawImage(uint x, uint y, Image image)
@@ -61,7 +62,7 @@
                 }
             }
 
-            m_console.Invalidate(m_console.ClientRect.Intersect(image.Rectangle));
+            m_console.Invalidate();
         }
 
         public void DrawImage(Point location, Image image)
@@ -87,21 +88,18 @@
         public static AsciiGraphics FromCharImage(Image image)
         {
             var fromCharImage = new AsciiGraphics(new VirtualConsole(image));
-            fromCharImage.Clear();
             return fromCharImage;
         }
 
         public static AsciiGraphics FromManagedConsole()
         {
             var fromManagedConsole = new AsciiGraphics(new ManagedConsole());
-            fromManagedConsole.Clear();
             return fromManagedConsole;
         }
 
         public static AsciiGraphics FromUnManagedConsole()
         {
             var fromUnManagedConsole = new AsciiGraphics(new UnManagedConsole());
-            fromUnManagedConsole.Clear();
             return fromUnManagedConsole;
         }
     }

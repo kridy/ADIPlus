@@ -16,12 +16,18 @@ namespace ADIPlus.Drawing
             m_image = image;
         }
 
-        public override void Invalidate(Rectangle rectangle)
+        public override void Invalidate()
         {
             for (var i = 0; i < m_buffer.Length; i++)
             {
                 m_image[(uint) i] = m_buffer[i];
             }
+        }
+
+        internal override void InitializeBuffer()
+        {
+            m_buffer = new AsciiColor[Width * Height];
+            m_buffer.Init(AsciiColor.empty);
         }
       
     }
