@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Security;
 using Microsoft.Win32.SafeHandles;
 
 namespace ADIPlus.Drawing
@@ -34,15 +36,19 @@ namespace ADIPlus.Drawing
                 };
         }
 
+        short color = 0;
+
         public override void Invalidate()
         {
-            for (int i = 0; i < m_buffer.Length; i++)
+            for (var i = 0; i < m_buffer.Length; i++)
             {
-                m_CharBuffer[i].Attributes = (short)m_buffer[i].ForgroundColor;
+                m_CharBuffer[i].Attributes = (short)((int)m_buffer[i].Color.ForgroundColor | 
+                                                    ((int)m_buffer[i].Color.BackgroundColor << 4));
+
                 m_CharBuffer[i].Char.AsciiChar = (byte)m_buffer[i].Character;
             }
 
-            bool b = Kernel32.WriteConsoleOutput(m_consoleBufferWriteHandle, m_CharBuffer,
+            var b = Kernel32.WriteConsoleOutput(m_consoleBufferWriteHandle, m_CharBuffer,
                           new Kernel32.Coord() { X = (short)Width, Y = (short)Height },
                           new Kernel32.Coord() { X = 0, Y = 0 },
                           ref m_rect);
@@ -51,14 +57,13 @@ namespace ADIPlus.Drawing
         internal override void InitializeBuffer()
         {
             //TODO init buffer with content from the console
-            m_buffer = new AsciiColor[Width * Height];
-            m_buffer.Init(AsciiColor.empty);
+            m_buffer = new AsciiPen[Width * Height];
+            m_buffer.Init(AsciiPen.empty);
         }
 
         public override void Dispose()
         {
             m_consoleBufferWriteHandle.Close();
         }
-        
     }
 }

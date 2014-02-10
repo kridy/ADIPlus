@@ -18,8 +18,8 @@ namespace ADIPlus.Drawing
         {
             foreach (var t in m_buffer) 
             {
-                Console.BackgroundColor = t.BackgroundColor;
-                Console.ForegroundColor = t.ForgroundColor;
+                Console.BackgroundColor = t.Color.BackgroundColor;
+                Console.ForegroundColor = t.Color.ForgroundColor;
                 Console.SetCursorPosition(0,0);
                 Console.Write(t.Character);
             }
@@ -27,8 +27,8 @@ namespace ADIPlus.Drawing
 
         internal override void InitializeBuffer()
         {
-            m_buffer =new AsciiColor[Width * Height];
-            m_buffer.Init(AsciiColor.empty);
+            m_buffer =new AsciiPen[Width * Height];
+            m_buffer.Init(AsciiPen.empty);
         }
     }
 }

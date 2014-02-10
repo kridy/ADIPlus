@@ -60,23 +60,11 @@ namespace Sandbox
             }
         }
     }
-
-    
-
+   
     class Program
     {
         static void Main(string[] args)
         {
-            var colors = new Dictionary<int, ConsoleColor>
-                         {
-                             {0, ConsoleColor.Blue},
-                             {1, ConsoleColor.Cyan},
-                             {2, ConsoleColor.Green},
-                             {3, ConsoleColor.Yellow},
-                             {4, ConsoleColor.Magenta},
-                             {5, ConsoleColor.Red}
-                         };
-
             var random = new Random();
 
             var width = Console.WindowWidth;
@@ -89,32 +77,35 @@ namespace Sandbox
                 do
                 {
                     var time = TimeUtil.MeasureAverageTime(() =>
-                                                               {
-                                                                   for (uint i = 0; i < height; i++)
-                                                                   {
-                                                                       bufferRender.DrawHorizontalLine(
-                                                                           GetRandomColorAscii(colors, random),
-                                                                           new Point(0, i), backbuffer.Width);
-                                                                       //bufferRender.DrawVerticalLine(
-                                                                       //    GetRandomColorAscii(colors, random), new Point(i, 0),
-                                                                       //    (uint) height);
-                                                                   }
-                                                                   displayRender.DrawImage(0, 0, backbuffer);
-                                                               }, 1);
+                                {
+                                    for (uint i = 0; i < height; i++)
+                                    {
+                                        bufferRender.DrawHorizontalLine(
+                                            GetRandomColorAscii(random),
+                                            new Point(0, i), backbuffer.Width);
+                                        //bufferRender.DrawVerticalLine(
+                                        //    GetRandomColorAscii(colors, random), new Point(i, 0),
+                                        //    (uint) height);
+                                    }
+                                    displayRender.DrawImage(0, 0, backbuffer);
+                                }, 1);
 
 
                 } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
             }
         }
 
-        private static AsciiColor GetRandomColorAscii(Dictionary<int, ConsoleColor> colors, Random random)
+        private static AsciiPen GetRandomColorAscii(Random random)
         {
-            return new AsciiColor(GetRandomColor(colors, random), GetRandomColor(colors, random), '*');
+
+            return new AsciiPen('*', GetRandomColor(random));
         }
 
-        private static ConsoleColor GetRandomColor(Dictionary<int, ConsoleColor> colors, Random random)
+        private static AsciiColor GetRandomColor(Random random)
         {
-            return colors[2];//random.Next(0, 5)];
+            return new AsciiColor(
+                (ConsoleColor)random.Next(0, 16), 
+                (ConsoleColor)random.Next(0, 16));
         }
     }
 }

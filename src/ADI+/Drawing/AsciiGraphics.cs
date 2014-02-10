@@ -11,32 +11,32 @@ namespace ADIPlus.Drawing
             m_console.InitializeBuffer();
         }
 
-        public void DrawHorizontalLine(AsciiColor color, Point location, uint width)
+        public void DrawHorizontalLine(AsciiPen pen, Point location, uint width)
         {
-            DrawHorizontalLine(color, location.X, location.Y, width);
+            DrawHorizontalLine(pen, location.X, location.Y, width);
         }
 
-        public void DrawHorizontalLine(AsciiColor color, uint x, uint y, uint width)
+        public void DrawHorizontalLine(AsciiPen pen, uint x, uint y, uint width)
         {
             var buffer = m_console.GetBuffer();
 
             for (uint i = 0; i < width; i++)
-                buffer[(y * width) + (x + i)] = color;
+                buffer[(y * width) + (x + i)] = pen;
 
             m_console.Invalidate();
         }
 
-        public void DrawVerticalLine(AsciiColor color, Point location, uint height)
+        public void DrawVerticalLine(AsciiPen pen, Point location, uint height)
         {
-            DrawVerticalLine(color, location.X, location.Y, height);
+            DrawVerticalLine(pen, location.X, location.Y, height);
         }
 
-        public void DrawVerticalLine(AsciiColor color, uint x, uint y, uint height)
+        public void DrawVerticalLine(AsciiPen pen, uint x, uint y, uint height)
         {
             var buffer = m_console.GetBuffer();
 
             for (uint i = 0; i < height; i++)
-                buffer[(i * m_console.Width) + x] = color;
+                buffer[(i * m_console.Width) + x] = pen;
 
             m_console.Invalidate();
         }       
@@ -53,12 +53,8 @@ namespace ADIPlus.Drawing
                 for (uint imgX = 0; imgX < image.Width; imgX++)
                 {                   
                     var offsetX = imgX + x;
-                    if (m_console.Width <= offsetX)
-                    {
-                        break;
-                    }
-
-
+                    if (m_console.Width <= offsetX) break;
+                    
                     buffer[(offsetY * m_console.Width) + offsetX] = image[(imgY * image.Width) + imgX];
                 }
             }
@@ -81,9 +77,9 @@ namespace ADIPlus.Drawing
             m_console.Clear();
         }
 
-        public void Clear(AsciiColor color)
+        public void Clear(AsciiPen pen)
         {
-            m_console.Clear(color);
+            m_console.Clear(pen);
         }
                    
         public static AsciiGraphics FromCharImage(Image image)

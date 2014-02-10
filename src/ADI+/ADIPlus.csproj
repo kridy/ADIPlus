@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Kernel32.cs" />
-    <Compile Include="Drawing\AsciiColor.cs" />
+    <Compile Include="Drawing\AsciiPen.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="Drawing\Adapters\ManagedConsole.cs" />
     <Compile Include="Drawing\Adapters\ConsoleAdabter.cs" />

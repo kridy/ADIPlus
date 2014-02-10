@@ -3,9 +3,9 @@ namespace ADIPlus.Drawing
 {
     internal abstract class ConsoleAdabter : IDisposable
     {
-        protected AsciiColor[] m_buffer;
+        protected AsciiPen[] m_buffer;
 
-        public AsciiColor[] GetBuffer()
+        public AsciiPen[] GetBuffer()
         {
             return m_buffer;
         }
@@ -34,12 +34,12 @@ namespace ADIPlus.Drawing
 
         public void Clear()
         {
-            Clear(AsciiColor.empty);
+            Clear(AsciiPen.empty);
         }
 
-        public void Clear(AsciiColor color)
+        public void Clear(AsciiPen pen)
         {
-            m_buffer.Init(color);
+            m_buffer.Init(pen);
             //TODO init buffer with content from the console.
             Invalidate();
         }
