@@ -19,9 +19,16 @@ namespace ADIPlus.Drawing
         public void DrawHorizontalLine(AsciiPen pen, uint x, uint y, uint width)
         {
             var buffer = m_console.GetBuffer();
+            
+            if (m_console.Height <= y) return;
 
             for (uint i = 0; i < width; i++)
-                buffer[(y * width) + (x + i)] = pen;
+            {
+                var offsetX = i + x;
+                if (m_console.Width <= offsetX) break;
+                
+                buffer[(y * m_console.Width) + offsetX] = pen;
+            }
 
             m_console.Invalidate();
         }
@@ -35,8 +42,15 @@ namespace ADIPlus.Drawing
         {
             var buffer = m_console.GetBuffer();
 
+            if (m_console.Width <= x) return;
+
             for (uint i = 0; i < height; i++)
-                buffer[(i * m_console.Width) + x] = pen;
+            {
+                var offsetY = i + y;
+                if (m_console.Height <= offsetY) break;
+
+                buffer[(offsetY * m_console.Width) + x] = pen;
+            }
 
             m_console.Invalidate();
         }       

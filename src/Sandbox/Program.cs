@@ -67,8 +67,8 @@ namespace Sandbox
         {
             var random = new Random();
 
-            var width = Console.WindowWidth;
-            var height = Console.WindowHeight;
+            var width = 20;// Console.WindowWidth;
+            var height = 10;// Console.WindowHeight;
 
             var backbuffer = new Image((uint) width, (uint) height);
             using(var bufferRender = AsciiGraphics.FromCharImage(backbuffer))
@@ -78,14 +78,14 @@ namespace Sandbox
                 {
                     var time = TimeUtil.MeasureAverageTime(() =>
                                 {
-                                    for (uint i = 0; i < height; i++)
+                                    for (uint i = 3; i < width; i++)
                                     {
-                                        bufferRender.DrawHorizontalLine(
-                                            GetRandomColorAscii(random),
-                                            new Point(0, i), backbuffer.Width);
-                                        //bufferRender.DrawVerticalLine(
-                                        //    GetRandomColorAscii(colors, random), new Point(i, 0),
-                                        //    (uint) height);
+                                       // bufferRender.DrawHorizontalLine(
+                                       //     GetRandomColorAscii(random),
+                                       //     new Point(5, i), backbuffer.Width-5);
+                                        bufferRender.DrawVerticalLine(
+                                            GetRandomColorAscii(random), new Point(i, 3),
+                                            (uint) height);
                                     }
                                     displayRender.DrawImage(0, 0, backbuffer);
                                 }, 1);
