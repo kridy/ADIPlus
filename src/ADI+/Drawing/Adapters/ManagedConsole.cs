@@ -16,12 +16,12 @@ namespace ADIPlus.Drawing
 
         public override void Invalidate()
         {
-            for (int i = 0; i < m_buffer.Length; i++)
+            foreach (var t in m_buffer) 
             {
-                Console.BackgroundColor = m_buffer[i].BackgroundColor;
-                Console.ForegroundColor = m_buffer[i].ForgroundColor;
+                Console.BackgroundColor = t.BackgroundColor;
+                Console.ForegroundColor = t.ForgroundColor;
                 Console.SetCursorPosition(0,0);
-                Console.Write(m_buffer[i].Character);
+                Console.Write(t.Character);
             }
         }
 

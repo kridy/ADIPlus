@@ -11,7 +11,6 @@ namespace ADIPlus.Drawing
         private readonly SafeFileHandle m_consoleBufferWriteHandle;
         private readonly Kernel32.CharInfo[] m_CharBuffer;
         private Kernel32.SmallRect m_rect;
-        private bool m_renderIsDeferred;
 
         public UnManagedConsole()
             :base((uint)Console.WindowWidth, (uint)Console.WindowHeight)
@@ -54,6 +53,11 @@ namespace ADIPlus.Drawing
             //TODO init buffer with content from the console
             m_buffer = new AsciiColor[Width * Height];
             m_buffer.Init(AsciiColor.empty);
+        }
+
+        public override void Dispose()
+        {
+            m_consoleBufferWriteHandle.Close();
         }
         
     }

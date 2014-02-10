@@ -1,6 +1,7 @@
+using System;
 namespace ADIPlus.Drawing
 {
-    internal abstract class ConsoleAdabter
+    internal abstract class ConsoleAdabter : IDisposable
     {
         protected AsciiColor[] m_buffer;
 
@@ -42,5 +43,7 @@ namespace ADIPlus.Drawing
             //TODO init buffer with content from the console.
             Invalidate();
         }
+
+        public virtual void Dispose(){}
     }
 }

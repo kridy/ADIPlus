@@ -1,6 +1,7 @@
-﻿namespace ADIPlus.Drawing
+﻿using System;
+namespace ADIPlus.Drawing
 {
-    public class AsciiGraphics
+    public class AsciiGraphics : IDisposable
     {
         private readonly ConsoleAdabter m_console;
 
@@ -101,6 +102,11 @@
         {
             var fromUnManagedConsole = new AsciiGraphics(new UnManagedConsole());
             return fromUnManagedConsole;
+        }
+
+        public void Dispose()
+        {
+            m_console.Dispose();
         }
     }
 }
