@@ -4,28 +4,26 @@ namespace ADIPlus.Drawing
     {
         internal static void Init(this Image image, AsciiColor color)
         {
-            var pen = new AsciiPen(' ', color);
             for (uint i = 0; i < image.Size; i++)
-                image[i] = pen;
+                image[i] = new CellDescription(' ', color); ;
         }
 
-        internal static void Init(this AsciiPen[] image, AsciiColor color)
+        internal static void Init(this CellDescription[] image, AsciiColor color)
         {
-            var pen = new AsciiPen(' ', color);
             for (uint i = 0; i < image.Length; i++)
-                image[i] = pen;
+                image[i] = new CellDescription(' ', color); ;
         }
     }
 
     public class Image
     {
         private readonly Rectangle m_rect;
-        private readonly AsciiPen[] m_buffer;
+        private readonly CellDescription[] m_buffer;
 
         public Image(uint width, uint height)
         {
             m_rect = new Rectangle(new Point(0,0), new Size(width,height));
-            m_buffer = new AsciiPen[m_rect.Width * m_rect.Height];
+            m_buffer = new CellDescription[m_rect.Width * m_rect.Height];
         }
 
         public int Size 
@@ -47,12 +45,10 @@ namespace ADIPlus.Drawing
             get { return m_rect; }
         }
 
-        public AsciiPen this[uint index]
+        internal CellDescription this[uint index]
         {
             get { return m_buffer[index]; }
             set { m_buffer[index] = value; }
         }
-
-
     }
 }

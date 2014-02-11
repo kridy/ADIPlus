@@ -1,11 +1,23 @@
 using System;
 namespace ADIPlus.Drawing
 {
+    internal class CellDescription
+    {
+        public CellDescription(char character, AsciiColor color)
+        {
+            Character = character;
+            Color = color;
+        }
+
+        public char Character { get; set; }
+        public AsciiColor Color { get; set; }
+    }
+
     internal abstract class RenderSurferce : IDisposable
     {
-        protected AsciiPen[] m_buffer;
+        protected CellDescription[] m_buffer;
 
-        public AsciiPen[] GetBuffer()
+        public CellDescription[] GetBuffer()
         {
             return m_buffer;
         }

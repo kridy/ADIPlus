@@ -14,12 +14,22 @@ namespace Sandbox
             using (var bufferRender = AsciiGraphics.FromCharImage(backbuffer))
             using (var displayRender = AsciiGraphics.FromUnManagedConsole())
             {
+#if !true
+
                 for (uint i = 0; i < height; i++)
                 {
                     bufferRender.DrawHorizontalLine(
-                        new AsciiPen('*', AsciiColors.Red),
+                        new AsciiPen("Helloworld", AsciiColors.Red),
                         new Point(0, i), width);
                 }
+#else
+                for (uint i = 0; i < width; i++)
+                {
+                    bufferRender.DrawVerticalLine(
+                        new AsciiPen("Helloworld", AsciiColors.Red),
+                        new Point(i, 0), height);
+                }
+#endif
 
                 displayRender.DrawImage(backbuffer);
 

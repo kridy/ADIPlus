@@ -19,15 +19,18 @@ namespace ADIPlus.Drawing
         public void DrawHorizontalLine(AsciiPen pen, uint x, uint y, uint width)
         {
             var buffer = m_console.GetBuffer();
-            
+            var strIndex = 0;
             if (m_console.Height <= y) return;
 
             for (uint i = 0; i < width; i++)
             {
                 var offsetX = i + x;
                 if (m_console.Width <= offsetX) break;
-                
-                buffer[(y * m_console.Width) + offsetX] = pen;
+
+                var index = (y*m_console.Width) + offsetX;
+
+                buffer[index].Character = pen.String[strIndex++ % pen.String.Length];
+                buffer[index].Color = pen.Color;
             }
 
             m_console.Invalidate();
@@ -41,7 +44,7 @@ namespace ADIPlus.Drawing
         public void DrawVerticalLine(AsciiPen pen, uint x, uint y, uint height)
         {
             var buffer = m_console.GetBuffer();
-
+            var strIndex = 0;
             if (m_console.Width <= x) return;
 
             for (uint i = 0; i < height; i++)
@@ -49,7 +52,11 @@ namespace ADIPlus.Drawing
                 var offsetY = i + y;
                 if (m_console.Height <= offsetY) break;
 
-                buffer[(offsetY * m_console.Width) + x] = pen;
+                var index = (offsetY*m_console.Width) + x;
+
+
+                buffer[index].Character = pen.String[strIndex++ % pen.String.Length];
+                buffer[index].Color = pen.Color;
             }
 
             m_console.Invalidate();

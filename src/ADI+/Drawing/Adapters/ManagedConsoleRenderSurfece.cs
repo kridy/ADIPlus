@@ -27,7 +27,7 @@ namespace ADIPlus.Drawing
 
         internal override void InitializeBuffer()
         {
-            m_buffer =new AsciiPen[Width * Height];
+            m_buffer =new CellDescription[Width * Height];
             m_buffer.Init(AsciiColors.White);
         }
     }

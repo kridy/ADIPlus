@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Drawing\AsciiColor.cs" />
+    <Compile Include="Drawing\AsciiColors.cs" />
     <Compile Include="Kernel32.cs" />
     <Compile Include="Drawing\AsciiPen.cs" />
     <Compile Include="Image.cs" />
