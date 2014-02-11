@@ -2,11 +2,11 @@ using System;
 
 namespace ADIPlus.Drawing
 {
-    internal class VirtualConsole : ConsoleAdabter
+    internal class VirtualRenderSurface : RenderSurferce
     {
         private readonly Image m_image;
 
-        public VirtualConsole(Image image)
+        public VirtualRenderSurface(Image image)
             :base(image.Width, image.Height)
         {
             
@@ -27,7 +27,7 @@ namespace ADIPlus.Drawing
         internal override void InitializeBuffer()
         {
             m_buffer = new AsciiPen[Width * Height];
-            m_buffer.Init(AsciiPen.empty);
+            m_buffer.Init(AsciiColors.White);
         }
       
     }

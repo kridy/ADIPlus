@@ -8,13 +8,6 @@ namespace ADIPlus
     internal class Kernel32
     {
         [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        public static extern bool FreeConsole();
-
-        [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        public static extern bool AttachConsole(
-            [MarshalAs(UnmanagedType.U4)] int dwProcessId );
-
-        [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         public static extern SafeFileHandle CreateConsoleScreenBuffer(
             [MarshalAs(UnmanagedType.U4)] uint dwDesiredAccess,
             [MarshalAs(UnmanagedType.U4)] uint dwShareMode,
@@ -27,7 +20,7 @@ namespace ADIPlus
 
         [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         public static extern SafeFileHandle CreateFile(
-            string fileName,
+            [MarshalAs(UnmanagedType.LPWStr)]string fileName,
             [MarshalAs(UnmanagedType.U4)] uint fileAccess,
             [MarshalAs(UnmanagedType.U4)] uint fileShare,
             IntPtr securityAttributes,

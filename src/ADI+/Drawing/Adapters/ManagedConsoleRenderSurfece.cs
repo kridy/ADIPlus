@@ -7,9 +7,9 @@ using System.Text;
 namespace ADIPlus.Drawing
 {
 
-    internal class ManagedConsole : ConsoleAdabter
+    internal class ManagedConsoleRenderSurfece : RenderSurferce
     {
-        public ManagedConsole()
+        public ManagedConsoleRenderSurfece()
             : base((uint)Console.WindowWidth, (uint)Console.WindowHeight)
         {            
         }
@@ -28,7 +28,7 @@ namespace ADIPlus.Drawing
         internal override void InitializeBuffer()
         {
             m_buffer =new AsciiPen[Width * Height];
-            m_buffer.Init(AsciiPen.empty);
+            m_buffer.Init(AsciiColors.White);
         }
     }
 }

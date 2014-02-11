@@ -7,14 +7,14 @@ using Microsoft.Win32.SafeHandles;
 
 namespace ADIPlus.Drawing
 {
-    internal class UnManagedConsole : ConsoleAdabter
+    internal class UnManagedConsoleRenderSurface : RenderSurferce
     {        
 
         private readonly SafeFileHandle m_consoleBufferWriteHandle;
         private readonly Kernel32.CharInfo[] m_CharBuffer;
         private Kernel32.SmallRect m_rect;
 
-        public UnManagedConsole()
+        public UnManagedConsoleRenderSurface()
             :base((uint)Console.WindowWidth, (uint)Console.WindowHeight)
         {            
             m_consoleBufferWriteHandle = Kernel32.CreateFile(
@@ -58,7 +58,7 @@ namespace ADIPlus.Drawing
         {
             //TODO init buffer with content from the console
             m_buffer = new AsciiPen[Width * Height];
-            m_buffer.Init(AsciiPen.empty);
+            m_buffer.Init(AsciiColors.White);
         }
 
         public override void Dispose()

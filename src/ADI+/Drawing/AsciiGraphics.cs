@@ -3,9 +3,9 @@ namespace ADIPlus.Drawing
 {
     public class AsciiGraphics : IDisposable
     {
-        private readonly ConsoleAdabter m_console;
+        private readonly RenderSurferce m_console;
 
-        private AsciiGraphics(ConsoleAdabter console)
+        private AsciiGraphics(RenderSurferce console)
         {
             m_console = console;
             m_console.InitializeBuffer();
@@ -91,26 +91,26 @@ namespace ADIPlus.Drawing
             m_console.Clear();
         }
 
-        public void Clear(AsciiPen pen)
+        public void Clear(AsciiColor color)
         {
-            m_console.Clear(pen);
+            m_console.Clear(color);
         }
                    
         public static AsciiGraphics FromCharImage(Image image)
         {
-            var fromCharImage = new AsciiGraphics(new VirtualConsole(image));
+            var fromCharImage = new AsciiGraphics(new VirtualRenderSurface(image));
             return fromCharImage;
         }
 
         public static AsciiGraphics FromManagedConsole()
         {
-            var fromManagedConsole = new AsciiGraphics(new ManagedConsole());
+            var fromManagedConsole = new AsciiGraphics(new ManagedConsoleRenderSurfece());
             return fromManagedConsole;
         }
 
         public static AsciiGraphics FromUnManagedConsole()
         {
-            var fromUnManagedConsole = new AsciiGraphics(new UnManagedConsole());
+            var fromUnManagedConsole = new AsciiGraphics(new UnManagedConsoleRenderSurface());
             return fromUnManagedConsole;
         }
 

@@ -2,16 +2,18 @@ namespace ADIPlus.Drawing
 {
     internal static class AsciiUtil
     {
-        public static void Init(this Image image, AsciiPen initPen)
+        internal static void Init(this Image image, AsciiColor color)
         {
+            var pen = new AsciiPen(' ', color);
             for (uint i = 0; i < image.Size; i++)
-                image[i] = initPen;
+                image[i] = pen;
         }
 
-        internal static void Init(this AsciiPen[] image, AsciiPen initPen)
+        internal static void Init(this AsciiPen[] image, AsciiColor color)
         {
+            var pen = new AsciiPen(' ', color);
             for (uint i = 0; i < image.Length; i++)
-                image[i] = initPen;
+                image[i] = pen;
         }
     }
 

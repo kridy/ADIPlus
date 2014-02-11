@@ -109,7 +109,7 @@ namespace ADIPlus.Drawing
 
         public override string ToString()
         {
-            return string.Format("{0}:{1}-{2}", Color, Character);
+            return string.Format("{0} {1}", Color, Character);
         }
     }
 }
