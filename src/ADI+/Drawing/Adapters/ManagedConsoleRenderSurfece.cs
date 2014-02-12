@@ -14,7 +14,7 @@ namespace ADIPlus.Drawing
         {            
         }
 
-        public override void Invalidate()
+        public override void Invalidate(Rectangle rect)
         {
             foreach (var t in m_buffer) 
             {

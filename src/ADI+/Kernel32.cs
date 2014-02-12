@@ -5,7 +5,9 @@ using Microsoft.Win32.SafeHandles;
 
 namespace ADIPlus
 {
-    internal class Kernel32
+
+    //TODO make internal again.
+    public class Kernel32
     {
         [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         public static extern SafeFileHandle CreateConsoleScreenBuffer(

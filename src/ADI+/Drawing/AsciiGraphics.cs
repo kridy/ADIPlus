@@ -33,7 +33,7 @@ namespace ADIPlus.Drawing
                 buffer[index].Color = pen.Color;
             }
 
-            m_console.Invalidate();
+            m_console.Invalidate(null);
         }
 
         public void DrawVerticalLine(AsciiPen pen, Point location, uint height)
@@ -59,7 +59,7 @@ namespace ADIPlus.Drawing
                 buffer[index].Color = pen.Color;
             }
 
-            m_console.Invalidate();
+            m_console.Invalidate(null);
         }       
 
         public void DrawImage(uint x, uint y, Image image)
@@ -80,7 +80,10 @@ namespace ADIPlus.Drawing
                 }
             }
 
-            m_console.Invalidate();
+            var imageLocationRect = new Rectangle(x, y, image.Width, image.Height);
+            var imageRenderedContentRect = imageLocationRect.Intersect(m_console.ClientRectangle);
+
+            m_console.Invalidate(imageRenderedContentRect);
         }
 
         public void DrawImage(Point location, Image image)

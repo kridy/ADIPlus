@@ -38,14 +38,13 @@ namespace ADIPlus.Drawing
 
         short color = 0;
 
-        public override void Invalidate()
+        public override void Invalidate(Rectangle rect)
         {
             for (var i = 0; i < m_buffer.Length; i++)
             {
+                m_CharBuffer[i].Char.AsciiChar = (byte)m_buffer[i].Character;
                 m_CharBuffer[i].Attributes = (short)((int)m_buffer[i].Color.ForgroundColor | 
                                                     ((int)m_buffer[i].Color.BackgroundColor << 4));
-
-                m_CharBuffer[i].Char.AsciiChar = (byte)m_buffer[i].Character;
             }
 
             var b = Kernel32.WriteConsoleOutput(m_consoleBufferWriteHandle, m_CharBuffer,
