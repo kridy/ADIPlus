@@ -35,23 +35,22 @@ namespace ADIPlus.Drawing
         {
             var charBufSize = new Kernel32.Coord((short)Width, (short)Height);
             var characterPos = new Kernel32.Coord((short)rect.X, (short)rect.Y);
-            var m_rect = new Kernel32.SmallRect()
-            {
-                Left = (short)rect.X,
-                Top = (short)rect.Y,
-                Right = (short)(rect.Width + rect.X),
-                Bottom = (short)(rect.Height + rect.Y)
-            };
-
+            var writeArea = new Kernel32.SmallRect()
+                                   {
+                                       Left = (short)rect.X,
+                                       Top = (short)rect.Y,
+                                       Right = (short)(rect.Width + rect.X),
+                                       Bottom = (short)(rect.Height + rect.Y)
+                                   };
 
             for (var y = rect.Y; y < rect.Height + rect.Y; y++)
             for (var x = rect.X; x < rect.Width + rect.X; x++)
             {
                 var i = (y*Width + x);
 
-                    m_CharBuffer[i].Char.AsciiChar = (byte)m_buffer[i].Character;
-                    m_CharBuffer[i].Attributes = (short)((int)m_buffer[i].Color.ForgroundColor |
-                                                        ((int)m_buffer[i].Color.BackgroundColor << 4));
+                    m_CharBuffer[i].Char.AsciiChar  = (byte)m_buffer[i].Character;
+                    m_CharBuffer[i].Attributes      = (short)((int)m_buffer[i].Color.ForgroundColor |
+                                                             ((int)m_buffer[i].Color.BackgroundColor << 4));
             }
 
             Kernel32.WriteConsoleOutput(
@@ -59,7 +58,7 @@ namespace ADIPlus.Drawing
                 m_CharBuffer,
                 charBufSize,
                 characterPos,
-                ref m_rect);
+                ref writeArea);
         }
 
         internal override void InitializeBuffer()

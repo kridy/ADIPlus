@@ -11,6 +11,25 @@ namespace ADIPlus.Drawing
             m_surface.InitializeBuffer();
         }
 
+        public void DrawPoint(AsciiPen pen, Point location)
+        {
+            DrawPoint(pen, location.X, location.Y);
+        }
+
+        private void DrawPoint(AsciiPen pen, uint x, uint y)
+        {
+            var buffer = m_surface.GetBuffer();
+
+            if (x >= m_surface.Width) return;
+            if (y >= m_surface.Height) return;
+
+            var index = (y * m_surface.Width) +x;
+
+            buffer[index].Character = pen.String[0];
+            buffer[index].Color = pen.Color;
+
+        }
+
         public void DrawHorizontalLine(AsciiPen pen, Point location, uint width)
         {
             DrawHorizontalLine(pen, location.X, location.Y, width);
@@ -21,12 +40,12 @@ namespace ADIPlus.Drawing
             var buffer = m_surface.GetBuffer();
             var stringIndex = 0;
 
-            if (m_surface.Height <= y) return;
+            if (y >= m_surface.Height) return;
 
             for (uint i = 0; i < width; i++)
             {
                 var offsetX = i + x;
-                if (m_surface.Width <= offsetX) break;
+                if (offsetX >= m_surface.Width) break;
 
                 var index = (y*m_surface.Width) + offsetX;
 

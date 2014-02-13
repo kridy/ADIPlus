@@ -9,10 +9,20 @@ namespace Sandbox
     {
         static void Main(string[] args)
         {
+            const int width = 100;
+            const int height = 50;
+
+            Console.CursorVisible = false;
+            Console.WindowWidth = width;
+            Console.WindowHeight = height;
+            Console.BufferWidth = width;
+            Console.BufferHeight = height;
+
+            const uint horizontalSpeed = 2;
+            const uint verticalSpeed = 1;
+
             var exit = false;
-            var location = new Point((uint) Console.WindowWidth/2, (uint) Console.WindowHeight/2);
-            const uint width = (uint)10; // (uint)Console.WindowWidth;
-            const uint height = (uint)6; // (uint)Console.WindowHeight;
+            var location = new Point(width / 2, height / 2);
 
             var backbuffer = new Image(width, height);
             using (var bufferRender = AsciiGraphics.FromCharImage(backbuffer))
@@ -20,39 +30,30 @@ namespace Sandbox
             {
                 do
                 {
-                    displayRender.Clear();
-#if true
-
-                    for (uint i = 0; i < height; i++)
+                    bufferRender.Clear();
+                 
+                    for (uint i = 0; i < 2; i++)
                     {
                         bufferRender.DrawHorizontalLine(
                             new AsciiPen("*", AsciiColors.Red),
-                            new Point(0, i), width);
+                            new Point(location.X, location.Y + i), 3);
                     }
-#else
-                for (uint i = 0; i < width; i++)
-                {
-                    bufferRender.DrawVerticalLine(
-                        new AsciiPen("Helloworld", AsciiColors.Red),
-                        new Point(i, 0), height);
-                }
-#endif
 
-                    displayRender.DrawImage(location.X, location.Y, backbuffer);
+                    displayRender.DrawImage(backbuffer);
 
                     switch (Console.ReadKey(true).Key)
                     {
                         case ConsoleKey.UpArrow:
-                            location = location.YDecremented();
+                            location = location.YDecremented(verticalSpeed);
                             break;
                         case ConsoleKey.RightArrow:
-                            location = location.XIncremented();
+                            location = location.XIncremented(horizontalSpeed);
                             break;
                         case ConsoleKey.LeftArrow:
-                            location = location.XDecremented();
+                            location = location.XDecremented(horizontalSpeed);
                             break;
                         case ConsoleKey.DownArrow:
-                            location = location.YIncremented();
+                            location = location.YIncremented(verticalSpeed);
                             break;
                         case ConsoleKey.Escape:
                             exit = true;
