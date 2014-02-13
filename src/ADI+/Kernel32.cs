@@ -7,10 +7,10 @@ namespace ADIPlus
 {
 
     //TODO make internal again.
-    public class Kernel32
+    internal class Kernel32
     {
         [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        public static extern SafeFileHandle CreateConsoleScreenBuffer(
+        internal static extern SafeFileHandle CreateConsoleScreenBuffer(
             [MarshalAs(UnmanagedType.U4)] uint dwDesiredAccess,
             [MarshalAs(UnmanagedType.U4)] uint dwShareMode,
             IntPtr lpSecurityAttributes,
@@ -21,7 +21,7 @@ namespace ADIPlus
         public static extern bool SetConsoleActiveScreenBuffer(SafeFileHandle hConsoleOutput);
 
         [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        public static extern SafeFileHandle CreateFile(
+        internal static extern SafeFileHandle CreateFile(
             [MarshalAs(UnmanagedType.LPWStr)]string fileName,
             [MarshalAs(UnmanagedType.U4)] uint fileAccess,
             [MarshalAs(UnmanagedType.U4)] uint fileShare,
@@ -31,7 +31,7 @@ namespace ADIPlus
             IntPtr template);
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool WriteConsoleOutput(
+        internal static extern bool WriteConsoleOutput(
             SafeFileHandle hConsoleOutput,
             CharInfo[] lpBuffer,
             Coord dwBufferSize,
@@ -39,7 +39,7 @@ namespace ADIPlus
             ref SmallRect lpWriteRegion);
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct Coord
+        internal struct Coord
         {
             public short X;
             public short Y;
@@ -52,7 +52,7 @@ namespace ADIPlus
         };
 
         [StructLayout(LayoutKind.Explicit)]
-        public struct CharUnion
+        internal struct CharUnion
         {
             [FieldOffset(0)]
             public char UnicodeChar;
@@ -61,7 +61,7 @@ namespace ADIPlus
         }
 
         [StructLayout(LayoutKind.Explicit)]
-        public struct CharInfo
+        internal struct CharInfo
         {
             [FieldOffset(0)]
             public CharUnion Char;
@@ -70,7 +70,7 @@ namespace ADIPlus
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct SmallRect
+        internal struct SmallRect
         {
             public short Left;
             public short Top;

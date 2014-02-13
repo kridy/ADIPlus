@@ -2,11 +2,11 @@ using System;
 
 namespace ADIPlus.Drawing
 {
-    internal class VirtualRenderSurface : RenderSurferce
+    internal class ImageRenderSurface : RenderSurferce
     {
         private readonly Image m_image;
 
-        public VirtualRenderSurface(Image image)
+        public ImageRenderSurface(Image image)
             :base(image.Width, image.Height)
         {
             
@@ -18,11 +18,12 @@ namespace ADIPlus.Drawing
 
         public override void Invalidate(Rectangle rect)
         {
-            for (var i = 0; i < m_buffer.Length; i++)
+            for (var y = rect.Y; y < rect.Height + rect.Y; y++)
+            for (var x = rect.X; x < rect.Width + rect.X; x++)
             {
-                m_image[(uint) i] = m_buffer[i];
+                m_image[(y* rect.Width + x)] = m_buffer[(y* rect.Width + x)];
             }
-        }
+         }
 
         internal override void InitializeBuffer()
         {
