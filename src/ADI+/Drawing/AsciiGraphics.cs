@@ -20,8 +20,7 @@ namespace ADIPlus.Drawing
         {
             var buffer = m_surface.GetBuffer();
 
-            if (x >= m_surface.Width) return;
-            if (y >= m_surface.Height) return;
+            if (x >= m_surface.Width || y >= m_surface.Height) return;
 
             var index = (y * m_surface.Width) +x;
 
@@ -40,7 +39,7 @@ namespace ADIPlus.Drawing
             var buffer = m_surface.GetBuffer();
             var stringIndex = 0;
 
-            if (y >= m_surface.Height) return;
+            if (x >= m_surface.Width || y >= m_surface.Height) return;
 
             for (uint i = 0; i < width; i++)
             {
@@ -68,7 +67,7 @@ namespace ADIPlus.Drawing
             var buffer = m_surface.GetBuffer();
             var stringIndex = 0;
 
-            if (m_surface.Width <= x) return;
+            if (x >= m_surface.Width || y >= m_surface.Height) return;
 
             for (uint i = 0; i < height; i++)
             {
@@ -90,7 +89,9 @@ namespace ADIPlus.Drawing
         public void DrawImage(uint x, uint y, Image image)
         {
             var buffer = m_surface.GetBuffer();
-         
+
+            if (x >= m_surface.Width || y >= m_surface.Height) return;
+
             for (uint imgY = 0; imgY < image.Height; imgY++)
             {
                 var offsetY = imgY + y;
