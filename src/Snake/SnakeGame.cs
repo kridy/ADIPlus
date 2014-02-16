@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using ADIPlus.Drawing;
 
 namespace Snake
@@ -24,11 +25,17 @@ namespace Snake
             _input.RegisterAction(ConsoleKey.RightArrow, new DelegateInputCommand(() => _direction = 4 ));
         }
 
+        private double accDt = 0;
 
-        public void Update()
+        public void Update(double d, double dt)
         {
-            //var part = _body.Dequeue();
+            accDt += dt;
 
+            if (accDt < 1) return;
+
+            accDt = 0;
+
+            Trace.WriteLine(d);
             switch (_direction)
             {                    
                 case 1:
@@ -87,9 +94,9 @@ namespace Snake
             
         }
 
-        public override void Update()
+        public override void Update(double t, double dt)
         {
-            _snake.Update();
+            _snake.Update(t,dt);
         }
 
         public override void Render()

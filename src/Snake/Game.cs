@@ -4,7 +4,7 @@
     {
         public bool Started { get; set; }
 
-        public abstract void Update();
+        public abstract void Update(double t, double dt);
 
         public abstract void Render();
 
