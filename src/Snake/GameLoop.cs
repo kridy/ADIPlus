@@ -35,6 +35,7 @@ namespace Snake
                 diff = start - last;
                 last = start;
 
+
                 if (diff > 0.25)
                     diff = 0.25;
 
@@ -62,7 +63,7 @@ namespace Snake
         [DllImport("Kernel32.dll")]
         private static extern bool QueryPerformanceFrequency(out long lpFrequency);
 
-        private static long frequency;
+        private static readonly long frequency;
 
         static Timer()
         {
