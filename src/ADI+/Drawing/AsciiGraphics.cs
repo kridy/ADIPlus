@@ -27,6 +27,8 @@ namespace ADIPlus.Drawing
             buffer[index].Character = pen.String[0];
             buffer[index].Color = pen.Color;
 
+            m_surface.Invalidate(new Rectangle(x, y, 1, 1));
+
         }
 
         public void DrawHorizontalLine(AsciiPen pen, Point location, uint width)
