@@ -22,7 +22,11 @@ namespace ADIPlus.Drawing
             return m_buffer;
         }
 
-        public abstract void Invalidate();
+        public void Invalidate()
+        {
+            Invalidate(ClientRectangle);
+        }
+        public abstract void Invalidate(Rectangle rect);
 
         public uint X { get { return ClientRectangle.X; } }
         public uint Y { get { return ClientRectangle.Y; } }
@@ -46,7 +50,7 @@ namespace ADIPlus.Drawing
         public void Clear(AsciiColor color)
         {
             m_buffer.Init(color);
-            Invalidate();
+            Invalidate(ClientRectangle);
         }
 
         public virtual void Dispose(){}

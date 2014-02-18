@@ -14,14 +14,16 @@ namespace ADIPlus.Drawing
         {            
         }
 
-        public override void Invalidate()
+        public override void Invalidate(Rectangle rect)
         {
-            foreach (var t in m_buffer) 
+            for (var y = rect.Y; y < rect.Height + rect.Y; y++)
+            for (var x = rect.X; x < rect.Width + rect.X; x++)
             {
-                Console.BackgroundColor = t.Color.BackgroundColor;
-                Console.ForegroundColor = t.Color.ForgroundColor;
-                Console.SetCursorPosition(0,0);
-                Console.Write(t.Character);
+                var cell = m_buffer[(y*rect.Width + x)];
+                Console.BackgroundColor = cell.Color.BackgroundColor;
+                Console.ForegroundColor = cell.Color.ForgroundColor;
+                Console.SetCursorPosition((int)x, (int)y);
+                Console.Write(cell.Character);
             }
         }
 

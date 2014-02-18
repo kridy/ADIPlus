@@ -20,7 +20,7 @@ namespace Sandbox
             for (var i = 0; i < count; i++)
             {
                 var start = DateTime.Now;
-                action.Invoke();
+                action();
                 info.Add(DateTime.Now - start);
             }
             return info;
@@ -45,7 +45,7 @@ namespace Sandbox
             {
                 get
                 {
-                    return m_times.Aggregate((total, current) => total += current);
+                    return m_times.Aggregate((total, current) => total + current);
                 }
             }
 

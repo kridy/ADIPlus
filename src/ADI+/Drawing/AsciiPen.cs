@@ -1,3 +1,5 @@
+using System;
+
 namespace ADIPlus.Drawing
 {
     public class AsciiPen
@@ -11,6 +13,9 @@ namespace ADIPlus.Drawing
 
         public AsciiPen(string str, AsciiColor color)
         {
+            if(string.IsNullOrEmpty(str))
+                throw new ArgumentException("null or empty string is not allowed", str);
+
             m_color = color;
             StartCap = string.Empty;
             EndCap = string.Empty;

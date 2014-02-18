@@ -86,5 +86,15 @@ namespace ADIPlus.Drawing
         {
             get { return (Width * 2) + (Height*2); }
         }
+
+        public Rectangle Relocate(Point p)
+        {
+            return new Rectangle(p, Size);
+        }
+
+        public Rectangle Relocate(uint x, uint y)
+        {
+            return new Rectangle(new Point(x, y), Size);
+        }
     }
 }

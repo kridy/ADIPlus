@@ -8,50 +8,57 @@ using Microsoft.Win32.SafeHandles;
 namespace ADIPlus.Drawing
 {
     internal class UnManagedConsoleRenderSurface : RenderSurferce
-    {        
+    {
 
         private readonly SafeFileHandle m_consoleBufferWriteHandle;
         private readonly Kernel32.CharInfo[] m_CharBuffer;
-        private Kernel32.SmallRect m_rect;
 
         public UnManagedConsoleRenderSurface()
-            :base((uint)Console.WindowWidth, (uint)Console.WindowHeight)
-        {            
+            : base((uint)Console.WindowWidth, (uint)Console.WindowHeight)
+        {
             m_consoleBufferWriteHandle = Kernel32.CreateFile(
-                "CONOUT$", 
-                0x40000000, 
-                2, 
-                IntPtr.Zero, 
-                FileMode.Open, 
-                0, 
+                "CONOUT$",
+                0x40000000,
+                2,
+                IntPtr.Zero,
+                FileMode.Open,
+                0,
                 IntPtr.Zero);
 
             m_CharBuffer = new Kernel32.CharInfo[Width * Height];
-            m_rect = new Kernel32.SmallRect()
-                {
-                    Left = 0, 
-                    Top = 0, 
-                    Right = (short)Width, 
-                    Bottom = (short)Height
-                };
+
         }
 
         short color = 0;
 
-        public override void Invalidate()
+        public override void Invalidate(Rectangle rect)
         {
-            for (var i = 0; i < m_buffer.Length; i++)
-            {
-                m_CharBuffer[i].Attributes = (short)((int)m_buffer[i].Color.ForgroundColor | 
-                                                    ((int)m_buffer[i].Color.BackgroundColor << 4));
+            var charBufSize = new Kernel32.Coord((short)Width, (short)Height);
+            var characterPos = new Kernel32.Coord((short)rect.X, (short)rect.Y);
+            var writeArea = new Kernel32.SmallRect()
+                                   {
+                                       Left = (short)rect.X,
+                                       Top = (short)rect.Y,
+                                       Right = (short)(rect.Width + rect.X),
+                                       Bottom = (short)(rect.Height + rect.Y)
+                                   };
 
-                m_CharBuffer[i].Char.AsciiChar = (byte)m_buffer[i].Character;
+            for (var y = rect.Y; y < rect.Height + rect.Y; y++)
+            for (var x = rect.X; x < rect.Width + rect.X; x++)
+            {
+                var i = (y*Width + x);
+
+                    m_CharBuffer[i].Char.AsciiChar  = (byte)m_buffer[i].Character;
+                    m_CharBuffer[i].Attributes      = (short)((int)m_buffer[i].Color.ForgroundColor |
+                                                             ((int)m_buffer[i].Color.BackgroundColor << 4));
             }
 
-            var b = Kernel32.WriteConsoleOutput(m_consoleBufferWriteHandle, m_CharBuffer,
-                          new Kernel32.Coord() { X = (short)Width, Y = (short)Height },
-                          new Kernel32.Coord() { X = 0, Y = 0 },
-                          ref m_rect);
+            Kernel32.WriteConsoleOutput(
+                m_consoleBufferWriteHandle,
+                m_CharBuffer,
+                charBufSize,
+                characterPos,
+                ref writeArea);
         }
 
         internal override void InitializeBuffer()
