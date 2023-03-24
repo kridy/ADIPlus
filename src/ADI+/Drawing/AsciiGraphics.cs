@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace ADIPlus.Drawing
 {
     public class AsciiGraphics : IDisposable
@@ -86,7 +87,12 @@ namespace ADIPlus.Drawing
             var clipArea = m_surface.ClientRectangle.Intersect(new Rectangle(x, y, 1, height));
 
             m_surface.Invalidate(clipArea);
-        }       
+        }
+
+        public void DrawString(string text, AsciiColor color, uint x, uint y)
+        {
+            DrawHorizontalLine(new AsciiPen(text, color), x, y, (uint)text.Length);
+        }
 
         public void DrawImage(uint x, uint y, Image image)
         {

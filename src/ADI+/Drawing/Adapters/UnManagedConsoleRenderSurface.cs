@@ -53,7 +53,7 @@ namespace ADIPlus.Drawing
                                                              ((int)m_buffer[i].Color.BackgroundColor << 4));
             }
 
-            Kernel32.WriteConsoleOutput(
+            Kernel32.WriteConsoleOutputW(
                 m_consoleBufferWriteHandle,
                 m_CharBuffer,
                 charBufSize,
