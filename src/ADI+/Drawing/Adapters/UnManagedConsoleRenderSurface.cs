@@ -7,7 +7,7 @@ using Microsoft.Win32.SafeHandles;
 
 namespace ADIPlus.Drawing
 {
-    internal class UnManagedConsoleRenderSurface : RenderSurferce
+    public class UnManagedConsoleRenderSurface : RenderSurferce
     {
 
         private readonly SafeFileHandle m_consoleBufferWriteHandle;

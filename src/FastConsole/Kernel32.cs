@@ -9,7 +9,7 @@ namespace ADIPlus
     //TODO make internal again.
     internal class Kernel32
     {
-        [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         internal static extern SafeFileHandle CreateConsoleScreenBuffer(
             [MarshalAs(UnmanagedType.U4)] uint dwDesiredAccess,
             [MarshalAs(UnmanagedType.U4)] uint dwShareMode,
@@ -17,10 +17,10 @@ namespace ADIPlus
             [MarshalAs(UnmanagedType.U4)] int dwFlags,
             IntPtr lpScreenBufferData);
 
-        [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         public static extern bool SetConsoleActiveScreenBuffer(SafeFileHandle hConsoleOutput);
 
-        [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         internal static extern SafeFileHandle CreateFile(
             [MarshalAs(UnmanagedType.LPWStr)]string fileName,
             [MarshalAs(UnmanagedType.U4)] uint fileAccess,
@@ -31,14 +31,14 @@ namespace ADIPlus
             IntPtr template);
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        internal static extern bool WriteConsoleOutputW(
+        internal static extern bool WriteConsoleOutput(
             SafeFileHandle hConsoleOutput,
             CharInfo[] lpBuffer,
             Coord dwBufferSize,
             Coord dwBufferCoord,
             ref SmallRect lpWriteRegion);
 
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        [StructLayout(LayoutKind.Sequential)]
         internal struct Coord
         {
             public short X;
@@ -51,7 +51,7 @@ namespace ADIPlus
             }
         };
 
-        [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Unicode)]
+        [StructLayout(LayoutKind.Explicit)]
         internal struct CharUnion
         {
             [FieldOffset(0)]
@@ -60,7 +60,7 @@ namespace ADIPlus
             public byte AsciiChar;
         }
 
-        [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Unicode)]
+        [StructLayout(LayoutKind.Explicit)]
         internal struct CharInfo
         {
             [FieldOffset(0)]

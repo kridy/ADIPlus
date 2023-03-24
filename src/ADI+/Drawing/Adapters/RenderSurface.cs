@@ -1,7 +1,7 @@
 using System;
 namespace ADIPlus.Drawing
 {
-    internal class CellDescription
+    public class CellDescription
     {
         public CellDescription(char character, AsciiColor color)
         {
@@ -13,7 +13,7 @@ namespace ADIPlus.Drawing
         public AsciiColor Color { get; set; }
     }
 
-    internal abstract class RenderSurferce : IDisposable
+    public abstract class RenderSurferce : IDisposable
     {
         protected CellDescription[] m_buffer;
 
