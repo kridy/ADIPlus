@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ADI+\ADIPlus.csproj" />
+    <ProjectReference Include="..\MinECS\MinECS.csproj" />
   </ItemGroup>
 
 </Project>

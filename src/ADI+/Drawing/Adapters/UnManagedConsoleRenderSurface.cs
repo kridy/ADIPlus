@@ -29,7 +29,7 @@ namespace ADIPlus.Drawing
 
         }
 
-        short color = 0;
+        //short color = 0;
 
         public override void Invalidate(Rectangle rect)
         {
