@@ -23,6 +23,15 @@ namespace MinECS
                 .ToArray();    
         }
 
+        public static T[] GetActiveComponents<T>() where T : Component
+        {
+            return objectComponentMap
+                .SelectMany(kvp => kvp.Value)
+                .Where(v => v is T && v.IsActive)
+                .Cast<T>()
+                .ToArray();
+        }
+
         public static T? GetComponent<T>(GameObject gameObject) where T : Component
         {
             if (!objectComponentMap.ContainsKey(gameObject.Id))
@@ -44,6 +53,13 @@ namespace MinECS
             var comp = GetComponents<T>();
 
             comp.UpdateAll(delta);            
+        }
+
+        public static void UpdateAllActive<T>(double delta) where T : Component
+        {
+            var comp = GetActiveComponents<T>();
+
+            comp.UpdateAll(delta);
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using ADIPlus.Drawing;
+
 using MinECS;
+
 using System.Numerics;
 
 public class RenderEngien
@@ -37,14 +39,6 @@ public class RenderEngien
     public RenderComponent Create(Action<AsciiGraphics, GameObject> imageFunk)
     {
         return new RenderComponent(_imageGraphics, imageFunk); 
-    }
-}
-
-public class UpdateEngien
-{
-    public void Update(double delta)
-    {
-        ComponentManager.UpdateAll<TranslationComponent>(delta);
     }
 }
 

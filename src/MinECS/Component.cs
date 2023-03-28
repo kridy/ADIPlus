@@ -2,7 +2,12 @@
 {
     public abstract class Component
     {
-        protected internal GameObject Owner;
+        public readonly Guid ComponentId = Guid.NewGuid();
+
+        public bool IsActive = true;
+        
+        public GameObject Owner;
+
         public abstract void Update(double delta);
     }
 }

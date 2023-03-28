@@ -17,5 +17,14 @@
             
             return this;            
         }
+
+        public GameObject Remove(Component component)
+        {
+            ComponentManager.Register(this, component);
+
+            component.Owner = this;
+
+            return this;
+        }
     }
 }

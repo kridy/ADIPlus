@@ -1,4 +1,5 @@
 ﻿using MinECS;
+
 using System.Numerics;
 
 public class TranslationComponent : Component 
@@ -22,17 +23,21 @@ public class TranslationComponent : Component
     }
 }
 
-public class Eatable
-{
-    public Eatable()
-    {
-        Energy = 1;
-    }
 
-    public int Energy;
-}
 
-public class FruiteEaterComponent
-{ 
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
