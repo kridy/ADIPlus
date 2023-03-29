@@ -2,15 +2,23 @@
 
 namespace MinECS
 {
-    public class World
+    public static class World
     {
-        private Dictionary<string, GameObject> gameobjects= new Dictionary<string, GameObject>();
+        private static Dictionary<string, GameObject> gameobjects= new Dictionary<string, GameObject>();
 
-        public GameObject Create(string id)
+        public static GameObject Create(string id)
         {
             gameobjects[id] = new GameObject(id);
 
             return gameobjects[id];
+        }
+
+        public static GameObject GetGameObject(string id) 
+        {
+            if (gameobjects.ContainsKey(id))
+                return gameobjects[id];
+
+            return null;
         }
     }
 }

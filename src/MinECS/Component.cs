@@ -7,7 +7,5 @@
         public bool IsActive = true;
         
         public GameObject Owner;
-
-        public abstract void Update(double delta);
     }
 }

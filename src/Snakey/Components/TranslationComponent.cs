@@ -14,30 +14,4 @@ public class TranslationComponent : Component
         Speed = new Vector2(speedX, speedY);
         Direction= new Vector2(dirX, dirY);
     }
-
-    public override void Update(double delta)
-    {
-        Location = new Vector2(
-            Location.X + (float)(Speed.X * Direction.X * delta) ,
-            Location.Y + (float)(Speed.Y * Direction.Y * delta));
-    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
