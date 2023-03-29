@@ -4,7 +4,6 @@ using System.Linq;
 
 public class GameEngien
 {
-    private readonly InputEngien _inputEngien;
     private readonly EngienState _engienState;
     private readonly GameState _gameState;
 
@@ -16,7 +15,6 @@ public class GameEngien
         _gameState = gameState;
 
         _renderEngien = renderEngien;
-        _inputEngien = new InputEngien();
         _updateEngien = updateEngien;
     }
 
@@ -48,8 +46,6 @@ public class GameEngien
                 countFrame = 0;
                 accumFps = 0;
             }
-
-            _inputEngien.Input(_engienState, _gameState);
 
             if(accumRender > frameTime)
             {

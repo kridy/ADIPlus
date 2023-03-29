@@ -10,7 +10,9 @@ public class TranslationSystem
         {
             var current = translations[i];
 
-            current.Location = current.Location + (current.Speed * current.Direction * (float)delta);
+            current.DistanceMoved = (current.Speed * current.Direction * (float)delta);
+
+            current.Location = current.Location + current.DistanceMoved;
         }        
     }
 }

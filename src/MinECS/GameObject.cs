@@ -26,5 +26,10 @@
 
             return this;
         }
+
+        public T? GetComponent<T>() where T: Component 
+        {
+            return ComponentManager.GetComponent<T>(this);
+        }
     }
 }
